@@ -20,7 +20,6 @@ export class CreateProfileComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.email = params['email'];
-      console.log('Email recebido:', this.email);
     });
   }
 
