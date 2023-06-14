@@ -1,0 +1,26 @@
+<div class="register-container">
+    <h2 class="register-title">Cadastro</h2>
+    <form class="register-form" (submit)="register($event, emailInput.value, passwordInput.value, confirmPasswordInput.value, confirmEmailInput.value)">
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input class="input-form-register" type="email" id="email" name="email" placeholder="Digite seu e-mail" #emailInput required>
+      </div>
+      <div class="form-group">
+        <label for="confirmEmail">Confirmação de E-mail</label>
+        <input class="input-form-register" type="email" id="confirmEmail" name="confirmEmail" placeholder="Confirme seu e-mail" #confirmEmailInput required>
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input class="input-form-register" type="password" id="password" name="password" placeholder="Digite sua senha" #passwordInput required>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirmação de Senha</label>
+        <input class="input-form-register" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirme sua senha" #confirmPasswordInput required>
+      </div>
+      <button class="register-button" type="submit">Cadastrar</button>
+    </form>
+    <div class="form-group">
+      <div class="has-registration" (click)="goToLogin()">Já possui cadastro? <span class="register">Faça login</span></div>
+    </div>
+  </div>
+  
