@@ -1,4 +1,4 @@
-.login-container {
+.create-profile-container {
     background-image: url("/assets/images/common/background-base.png");
     background-size: cover;
     background-position: center;
@@ -9,18 +9,12 @@
     height: 100vh;
 }
 
-.login-title {
+.create-profile-title {
     font-size: 2rem;
     margin-bottom: 50px;
 }
 
-.logo-image {
-    display: block;
-    margin: 0 auto;
-    width: 150px;
-}
-
-.login-form {
+.create-profile-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,7 +26,7 @@
     margin-bottom: 1rem;
 }
 
-.input-form-login {
+.input-form-create-profile {
     border-radius: 12px;
     width: 313.5px;
 }
@@ -42,26 +36,13 @@ label {
     margin-bottom: 0.5rem;
 }
 
-input {
+input,
+select {
     padding: 0.5rem;
     font-size: 1rem;
 }
 
-.forgot-password,
-.first-access {
-    text-align: center;
-    margin-top: 0.5rem;
-    color: darkgreen;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 30px;
-}
-
-.register {
-    color: peru;
-}
-
-.login-button {
+.create-profile-button {
     padding: 1rem 2rem;
     background-color: #4CAF50;
     color: white;
@@ -69,11 +50,10 @@ input {
     border: none;
     border-radius: 10px;
     margin-top: 10px;
-    font-weight: bold;
 }
 
 @media (max-width: 768px) {
-    .login-title {
+    .create-profile-title {
         font-size: 1.5rem;
     }
 
@@ -81,7 +61,7 @@ input {
         font-size: 0.8rem;
     }
 
-    .login-button {
+    .create-profile-button {
         font-size: 1rem;
     }
 }

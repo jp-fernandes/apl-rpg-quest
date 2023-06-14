@@ -1,0 +1,31 @@
+<div class="create-profile-container">
+    <h2 class="create-profile-title">Criação de Perfil</h2>
+    <form class="create-profile-form" (submit)="createProfile($event, nameInput.value, surnameInput.value, ageInput.value, genderInput.value, cityInput.value, stateInput.value)">
+      <div class="form-group">
+        <label for="name">Nome</label>
+        <input class="input-form-create-profile" type="text" id="name" name="name" placeholder="Digite seu nome" #nameInput required>
+      </div>
+      <div class="form-group">
+        <label for="surname">Sobrenome</label>
+        <input class="input-form-create-profile" type="text" id="surname" name="surname" placeholder="Digite seu sobrenome" #surnameInput required>
+      </div>
+      <div class="form-group">
+        <label for="age">Idade</label>
+        <input class="input-form-create-profile" type="number" id="age" name="age" placeholder="Digite sua idade" #ageInput required>
+      </div>
+      <div class="form-group">
+        <label for="gender">Gênero</label>
+        <input class="input-form-create-profile" type="text" id="gender" name="gender" placeholder="Digite seu gênero" #genderInput required>
+      </div>
+      <div class="form-group">
+        <label for="city">Cidade</label>
+        <input class="input-form-create-profile" type="text" id="city" name="city" placeholder="Digite sua cidade" #cityInput required>
+      </div>
+      <div class="form-group">
+        <label for="state">Estado</label>
+        <input class="input-form-create-profile" type="text" id="state" name="state" placeholder="Digite seu estado" #stateInput required>
+      </div>
+      <button class="create-profile-button" type="submit">Criar Perfil</button>
+    </form>
+  </div>
+  
