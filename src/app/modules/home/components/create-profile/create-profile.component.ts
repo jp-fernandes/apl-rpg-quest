@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { appSettings } from 'app-settings';
+import { appSettings } from 'appSettings';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 
@@ -42,7 +42,7 @@ export class CreateProfileComponent implements OnInit {
   ): void {
     event.preventDefault();
 
-    //To-do 
+    //To-do
     //1 - Validar o campo de idade para apenas 2 caracteres
     const ageNumber = parseInt(age, 10);
     const stateUpper = state.toUpperCase();

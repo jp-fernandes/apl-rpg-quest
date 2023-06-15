@@ -16,6 +16,6 @@
         <div class="forgot-password" (click)="goForgetPassword()">Esqueci minha senha</div>
         <div class="first-access" (click)="goToRegister()">Primeiro acesso? <span class="register">Cadastre-se</span></div>
       </div>
+      <div *ngIf="loading" class="loader"></div>
     </form>
   </div>
-  

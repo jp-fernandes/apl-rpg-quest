@@ -78,6 +78,36 @@ input {
   background-color: #007bff;
 }
 
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+  color: #333;
+  font-weight: bold;
+}
+
+.loader::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid #333;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 768px) {
   .login-title {
     font-size: 2rem;
