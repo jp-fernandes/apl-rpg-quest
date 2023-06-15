@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import localePt from '@angular/common/locales/pt';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { SharedModule } from './modules/shared/shared.module';
 
 registerLocaleData(localePt);
 
@@ -22,14 +22,14 @@ registerLocaleData(localePt);
   imports: [
     BrowserModule,
     CommonModule,
-    MatBottomSheetModule,
     InitiationModule,
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SharedModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' }

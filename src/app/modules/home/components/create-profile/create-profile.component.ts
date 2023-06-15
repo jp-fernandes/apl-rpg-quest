@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { appSettings } from 'app-settings';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 
 @Component({
   selector: 'rpg-create-profile',
@@ -14,13 +16,19 @@ export class CreateProfileComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private matBottomSheet: MatBottomSheet,
     private route: ActivatedRoute
   ) { }
 
+  imageError: string = "/assets/images/modal/modal-error.svg"
+  imageSuccess: string = "/assets/images/modal/modal-success.svg"
+  titleError: string = ""
+  flagLogin: boolean = false;
+  flagHome: boolean = false;
+
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.email = params['email'];
-    });
+    this.email = window.history.state && window.history.state.email;
+    console.log("email recebido ", this.email)
   }
 
   createProfile(
@@ -34,7 +42,10 @@ export class CreateProfileComponent implements OnInit {
   ): void {
     event.preventDefault();
 
+    //To-do 
+    //1 - Validar o campo de idade para apenas 2 caracteres
     const ageNumber = parseInt(age, 10);
+    const stateUpper = state.toUpperCase();
 
     const payload = {
       age: ageNumber,
@@ -42,9 +53,22 @@ export class CreateProfileComponent implements OnInit {
       surname,
       gender,
       city,
-      state,
+      state: stateUpper,
       email: this.email
     };
+
+    if (!payload.email) {
+      const messageError = "Desculpe, ocorreu um erro. Por favor, faça login novamente."
+      this.flagLogin = true;
+      this.openModalInfo(
+        this.imageError,
+        "Ir para o login",
+        "Ops!",
+        messageError
+      );
+
+      return;
+    }
 
     this.createUserProfile(payload);
   }
@@ -54,24 +78,57 @@ export class CreateProfileComponent implements OnInit {
 
     this.http.post(apiUrl, payload).subscribe(
       (response) => {
-        console.log('Perfil criado com sucesso:', response);
-        //To-do
-        // 1 - Colocar uma mensagem de sucesso
-        this.router.navigate(['/home']);
+        const messageSucess = "Seu perfil foi criado com sucesso! Agora vamos começar o aprendizado!";
+        const titleSucess = `Parabéns, <strong>${payload.name}</strong>!`;
+        this.flagHome = true;
+        this.openModalInfo(
+          this.imageSuccess,
+          "Ir para home",
+          titleSucess,
+          messageSucess
+        );
+
       },
       (error) => {
-        //To-do
-        // 1 - Colocar uma modal para exibir uma mensagem de erro ao usuário informando o erro ocorrido
         console.log(this.handleErrorCreateProfile(error));
+        const messageError = this.handleErrorCreateProfile(error.message);
+        this.openModalInfo(
+          this.imageError,
+          "Voltar",
+          this.titleError || "Erro",
+          this.titleError ? "" : messageError
+        );
       }
     );
   }
 
-  handleErrorCreateProfile(error: any): void {
+  openModalInfo(image: string, buttonText: string, title: string, text: string) {
+    this.matBottomSheet.open(ModalInfoComponent, {
+      data: {
+        image: image,
+        buttonText: buttonText,
+        title: title,
+        text: text
+      },
+      panelClass: 'container-modal'
+    })
+      .afterDismissed()
+      .subscribe(x => {
+        if (this.flagLogin) {
+          this.router.navigate(['/login']);
+        } else if (this.flagHome) {
+          this.router.navigate(['/home']);
+        }
+      })
+  }
+
+  handleErrorCreateProfile(error: any): string {
+    this.titleError = "";
     if (error && error.error && error.error.code == "409" || error && error.error && error.error.error == "Usuário já existe") {
       error = "Usuário já existe!"
+      this.titleError = error;
     } else {
-      error = "Erro ao criar perfil não tratado";
+      error = "Ocorreu um erro na criação do perfil, por favor tente novamente!";
     }
     return error;
   }

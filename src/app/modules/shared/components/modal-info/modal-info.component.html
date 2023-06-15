@@ -1,0 +1,20 @@
+<div class="modal-info-container">
+    <div class="box__modal">
+        <div class="close-modal__right" *ngIf="!data.image">
+            <mat-icon class="modal__icon" (click)="closeModal()">close</mat-icon>
+        </div>
+        <div *ngIf="data.image" class="modal__image">
+            <img [src]="data.image">
+        </div>
+        <div class="container-modal__title">
+            <span class="modal__title" [innerHTML]="data.title"></span>
+        </div>
+        <div class="container-modal__text">
+            <span [innerHTML]="data.text"></span>
+        </div>
+        <div class="container-modal__footer">
+            <button type="submit" class="modal-footer__button" (click)="closeModal()" [ngClass]="{'width100' : !data}">
+                {{buttonText}}</button>
+        </div>
+    </div>
+</div>

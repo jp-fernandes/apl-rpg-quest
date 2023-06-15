@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
+import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 
 @Component({
   selector: 'rpg-register',
@@ -10,33 +12,64 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
   constructor(
     private auth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private matBottomSheet: MatBottomSheet
   ) { }
+
+  imageError: string = "/assets/images/modal/modal-error.svg"
+  imageSuccess: string = "/assets/images/modal/modal-success.svg"
+  flagLogin: boolean = false;
+  flagForget: boolean = false;
 
   register(event: Event, email: string, password: string, confirmPassword: string, confirmEmail: string): void {
     event.preventDefault();
-  
+
     if (confirmEmail !== email) {
-      console.log('Os e-mails não correspondem.');
-      // To-do: Colocar uma modal para exibir uma mensagem de erro ao usuário
+      const emailError = "E-mails não correspondentes. Por favor, verifique novamente."
+      this.openModalInfo(
+        this.imageError,
+        "Voltar",
+        "Ops!",
+        emailError
+      );
+
       return;
     }
-  
+
     if (confirmPassword !== password) {
-      console.log('As senhas não correspondem.');
-      // To-do: Colocar uma modal para exibir uma mensagem de erro ao usuário
+      const passwordError = "Senhas não correspondentes. Por favor, verifique novamente."
+      this.openModalInfo(
+        this.imageError,
+        "Voltar",
+        "Ops!",
+        passwordError
+      );
+
       return;
     }
-  
+
     this.auth.createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const uid = userCredential.user?.uid;
-        console.log('Usuário criado:', uid);
-        // To-do: Redirecionar para a página desejada
+
+        const messageSucess = "Seu cadastro foi realizado com sucesso! Agora vá para a página de login, faça o login e inicie a criação do seu perfil."
+        this.flagLogin = true;
+        this.openModalInfo(
+          this.imageSuccess,
+          "Ir para o login",
+          "Parabéns!",
+          messageSucess
+        );
+
       })
       .catch((error) => {
-        console.log(this.handleErrorRegister(error.message));
-        // To-do: Colocar uma modal para exibir uma mensagem de erro ao usuário informando o erro ocorrido
+        const messageError = this.handleErrorRegister(error.message);
+        this.openModalInfo(
+          this.imageError,
+          this.flagForget ? "Redefinir senha" : "Voltar",
+          "Erro",
+          messageError
+        );
       });
   }
 
@@ -44,16 +77,38 @@ export class RegisterComponent {
     this.router.navigate(['/login']);
   }
 
-  handleErrorRegister(message: any): void {
+  openModalInfo(image: string, buttonText: string, title: string, text: string) {
+    this.matBottomSheet.open(ModalInfoComponent, {
+      data: {
+        image: image,
+        buttonText: buttonText,
+        title: title,
+        text: text
+      },
+      panelClass: 'container-modal'
+    })
+      .afterDismissed()
+      .subscribe(x => {
+        if (this.flagLogin) {
+          this.router.navigate(['/login']);
+        } else if (this.flagForget) {
+          this.router.navigate(['/forget-password']);
+        }
+      })
+  }
+
+  handleErrorRegister(message: any): string {
+    this.flagForget = false;
     switch (message) {
       case 'Firebase: The email address is already in use by another account. (auth/email-already-in-use).':
-        message = "O endereço de e-mail já está sendo usado por outra conta";
+        message = "O endereço de e-mail já está sendo usado por outra conta. Se você esqueceu a sua senha, clique em '<strong>Redefinir senha</strong>' para redefini-la.";
+        this.flagForget = true;
         break;
       case 'Firebase: Password should be at least 6 characters (auth/weak-password).':
         message = "A senha deve ter pelo menos 6 caracteres"
         break;
       default:
-        message = "Erro ao criar usuario não tratado"
+        message = "Ocorreu um erro, por favor tente novamente!"
     }
     return message;
   }
