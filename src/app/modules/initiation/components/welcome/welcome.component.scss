@@ -1,73 +1,92 @@
 .welcome-container {
-    background-image: url("/assets/images/common/background-base.png");
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+  background-image: url("/assets/images/common/background-base.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .logo-image {
-    display: block;
-    margin: 0 auto;
-    width: 150px;
+  display: block;
+  margin: 0 auto;
+  width: 150px;
 }
 
 .title-rpg {
-    display: flex;
-    text-align: center;
+  font-size: 2.2rem;
+  display: flex;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .subtitle-rpg {
-    color: darkgreen;
-    margin-bottom: 1rem;
-    display: flex;
-    text-align: center;
-    padding-bottom: 25px;
+  font-size: 1.5rem;
+  color: darkgreen;
+  margin-bottom: 1rem;
+  display: flex;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
 .button-to-start {
-    padding: 1rem 2rem;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+  padding: 1rem 2rem;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
 }
 
-@media (max-width: 768px) {
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    .button {
-        padding: 0.8rem 1.6rem;
-        font-size: 1rem;
-    }
+.button-to-start:hover{
+  background-color: #007bff;
 }
 
 .footer {
-    padding: 1rem;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    color: #1A237E;
-    font-weight: bold;
+  padding: 1rem;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  color: brown;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .button {
+    padding: 0.8rem 1.6rem;
+    font-size: 1rem;
+  }
+
+  .title-rpg {
+    font-size: 2rem;
+    padding: 2px;
+    margin-bottom: 50px;
+  }
+
+  .subtitle-rpg {
     font-size: 1.2rem;
+    padding: 2px;
+    margin-bottom: 50px;
+  }
 }
