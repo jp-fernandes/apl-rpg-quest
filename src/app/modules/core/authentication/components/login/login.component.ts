@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { appSettings } from 'appSettings';
+import { customSettings } from 'src/assets/config/customSettings';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 
@@ -53,7 +53,7 @@ export class LoginComponent {
   checkProfileExistence(email: string): void {
     this.loading = true;
     // Chamar a API para verificar se o perfil do usuário já existe
-    const apiUrl = `${appSettings.apiUrl}/users/${encodeURIComponent(email)}`;
+    const apiUrl = `${customSettings.apiUrl}/users/${encodeURIComponent(email)}`;
 
     this.http.get<ProfileExistenceResponse>(apiUrl)
       .subscribe(
@@ -62,6 +62,7 @@ export class LoginComponent {
           if (response && response.code == 404) {
             this.router.navigate(['/create-profile'], { state: { email: email } });
           } else {
+            localStorage.setItem('user', JSON.stringify(response));
             this.router.navigate(['/home']);
           }
         },

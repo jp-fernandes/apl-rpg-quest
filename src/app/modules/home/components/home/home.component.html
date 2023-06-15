@@ -7,12 +7,12 @@
   <h3 class="home-sub-title">Explore as opções abaixo e inicie sua jornada de conhecimento!</h3>
 
   <div class="buttons-section">
-    <button class="main-buttons"><i class="fas fa-book"></i> Trilhas para Estudo</button>
-    <button class="main-buttons"><i class="fas fa-pencil-alt"></i> Realizar Provas</button>
+    <button (click)="studyPaths()" class="main-buttons"><i class="fas fa-book"></i> Trilhas para Estudo</button>
+    <button (click)="takeExams()" class="main-buttons"><i class="fas fa-pencil-alt"></i> Realizar Provas</button>
     <button class="main-buttons"><i class="fas fa-redo"></i> Recomeçar do Zero</button>
-    <button class="main-buttons"><i class="fas fa-trophy"></i> Desempenho Atual</button>
-    <button class="main-buttons"><i class="fas fa-user"></i> Perfil</button>
-    <button class="main-buttons"><i class="fas fa-info-circle"></i> Regras do Jogo</button>
+    <button (click)="viewCurrentPerformance()" class="main-buttons"><i class="fas fa-trophy"></i> Desempenho Atual</button>
+    <button (click)="viewProfile()" class="main-buttons"><i class="fas fa-user"></i> Perfil</button>
+    <button (click)="viewGameRules()" class="main-buttons"><i class="fas fa-info-circle"></i> Regras do Jogo</button>
   </div>
 
   <div class="login-access" (click)="goToLogin()">Se deseja sair do jogo, <span class="here">clique aqui</span></div>

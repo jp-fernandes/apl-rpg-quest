@@ -63,9 +63,10 @@ h1 {
   padding: 1rem;
   text-align: center;
   position: absolute;
-  bottom: 0;
-  color: brown;
+  bottom: 20px;
+  color: darkgreen;
   font-size: 1.2rem;
+  font-weight: bold;
 }
 
 @media (max-width: 768px) {

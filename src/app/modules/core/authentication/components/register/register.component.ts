@@ -91,7 +91,7 @@ export class RegisterComponent {
       .subscribe(x => {
         if (this.flagLogin) {
           this.router.navigate(['/login']);
-        } else if (this.flagForget) {
+        } else if (this.flagForget && x === "OK") {
           this.router.navigate(['/forget-password']);
         }
       })

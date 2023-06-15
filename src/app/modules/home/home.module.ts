@@ -3,11 +3,21 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
 import { CreateProfileComponent } from './components/create-profile/create-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GameRulesComponent } from './components/game-rules/game-rules.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { CurrentPerformanceComponent } from './components/current-performance/current-performance.component';
+import { ExamsComponent } from './components/exams/exams.component';
+import { StudyComponent } from './components/study/study.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    CreateProfileComponent
+    CreateProfileComponent,
+    GameRulesComponent,
+    ProfileComponent,
+    CurrentPerformanceComponent,
+    ExamsComponent,
+    StudyComponent
   ],
   imports: [
     CommonModule,
