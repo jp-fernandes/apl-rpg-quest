@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { appSettings } from 'app-settings';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 
 interface ProfileExistenceResponse {
   message: string;
@@ -18,8 +20,15 @@ export class LoginComponent {
   constructor(
     private auth: AngularFireAuth,
     private router: Router,
+    private matBottomSheet: MatBottomSheet,
     private http: HttpClient
   ) { }
+
+  imageError: string = "/assets/images/modal/modal-error.svg"
+  titleError: string = ""
+
+  //To-do
+  // Tentar personalizar os required
 
   login(event: Event, email: string, password: string): void {
     event.preventDefault();
@@ -30,9 +39,13 @@ export class LoginComponent {
         this.checkProfileExistence(email);
       })
       .catch((error) => {
-        //To-do
-        // 1 - Colocar uma modal para exibir uma mensagem de erro ao usuário informando o erro ocorrido
-        console.log(this.handleErrorLogin(error.message));
+        const messageError = this.handleErrorLogin(error.message);
+        this.openModalInfo(
+          this.imageError,
+          "Voltar",
+          this.titleError || "Erro",
+          this.titleError ? "" : messageError
+        );
       });
   }
 
@@ -44,16 +57,22 @@ export class LoginComponent {
       .subscribe(
         (response) => {
 
+          //To-do
+          // 1 - Colocar um loader pq ta demorando muito.
           if (response && response.code == 404) {
-            this.router.navigate(['/create-profile'], { queryParams: { email: email } });
+            this.router.navigate(['/create-profile'], { state: { email: email } });
           } else {
             this.router.navigate(['/home']);
           }
         },
         (error) => {
-          console.error('Erro ao chamar a API:', error);
-          //To-do
-          // 1 - Colocar uma modal para exibir uma mensagem de erro ao usuário informando o erro ocorrido
+          const messageError = error && error.error && error.error.message || "Ocorreu um erro, por favor tente novamente!";
+          this.openModalInfo(
+            this.imageError,
+            "Voltar",
+            "Erro",
+            messageError
+          );
         }
       );
   }
@@ -66,16 +85,34 @@ export class LoginComponent {
     this.router.navigate(['/forget-password']);
   }
 
-  handleErrorLogin(message: any): void {
+  openModalInfo(image: string, buttonText: string, title: string, text: string) {
+    this.matBottomSheet.open(ModalInfoComponent, {
+      data: {
+        image: image,
+        buttonText: buttonText,
+        title: title,
+        text: text
+      },
+      panelClass: 'container-modal'
+    })
+      .afterDismissed()
+  }
+
+  handleErrorLogin(message: any): string {
+    this.titleError = "";
     switch (message) {
       case 'Firebase: The password is invalid or the user does not have a password. (auth/wrong-password).':
-        message = "A senha é inválida ou o usuário não possui senha";
+        message = "Senha inválida.";
+        this.titleError = message;
         break;
       case 'Firebase: There is no user record corresponding to this identifier. The user may have been deleted. (auth/user-not-found).':
         message = "Não há registro de usuário correspondente a este e-mail."
         break;
+      case 'Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).':
+        message = "O acesso a esta conta foi temporariamente desativado devido a muitas tentativas de login malsucedidas. Você pode restaurá-lo imediatamente redefinindo sua senha ou pode tentar novamente mais tarde."
+        break;
       default:
-        message = "Erro de login não tratado"
+        message = "Ocorreu um erro, por favor tente novamente!"
     }
     return message;
   }

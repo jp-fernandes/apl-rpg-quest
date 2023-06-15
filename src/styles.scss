@@ -1,12 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 html,
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     height: 100%;
     margin: 0;
     padding: 0;
 }
 
-// TO-DO
-// Trocar fonte do projeto
+.container-modal {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin: 0;
+    padding: 0 !important;
+}

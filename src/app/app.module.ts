@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import localePt from '@angular/common/locales/pt';
 import { CommonModule, registerLocaleData } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from './modules/shared/shared.module';
 
 registerLocaleData(localePt);
 
@@ -25,7 +27,9 @@ registerLocaleData(localePt);
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    SharedModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' }
