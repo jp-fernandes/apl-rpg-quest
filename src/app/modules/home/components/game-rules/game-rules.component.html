@@ -1,1 +1,21 @@
-<p>game-rules works!</p>
+<div class="game-rules-container">
+  <h2 class="game-rules-title">Regras do Jogo</h2>
+  <div class="game-rules-details">
+    <label class="sub-title"><i class="fas fa-clipboard"></i> Geral:</label> <!-- Ícone de prancheta -->
+    <div class="box-group">
+      <p class="info-text"><i class="fas fa-info-circle"></i> O jogador terá que efetuar os estudos e as atividades antes de realizar a prova final.</p>
+      <p class="info-text"><i class="fas fa-info-circle"></i> Os estudos e as atividades ficam localizados em: <b>Menu > Trilhas para Estudo</b></p>
+      <p class="info-text"><i class="fas fa-info-circle"></i> Caso o jogador clique em: <b>Menu >  Recomeçar do Zero</b> irá zerar toda sua pontuação feita no jogo.</p>
+    </div>
+    <label class="sub-title"><i class="fas fa-balance-scale"></i> Pesos das Notas:</label> <!-- Ícone de balança -->
+    <div class="box-group">
+      <p class="info-text-weights"><i class="fas fa-percent"></i> Serão 4 atividades cada uma terá peso: <b>10%</b></p>
+      <p class="info-text-weights"><i class="fas fa-percent"></i> A avaliação final terá peso: <b>60%</b> </p>
+    </div>
+    <label class="sub-title"><i class="fas fa-award"></i> Aprovação:</label> <!-- Ícone de prêmio -->
+    <div class="box-group">
+      <p class="info-text"><i class="fas fa-check"></i> Nota igual ou superior a <b>6,0</b> </p>
+    </div>
+  </div>
+  <div class="home-access" (click)="goToHome()">Para voltar à home, <span class="here">clique aqui</span></div>
+</div>

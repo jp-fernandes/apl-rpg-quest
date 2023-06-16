@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
-import { getItemFromLocalStorage } from 'src/assets/config/utils';
+import { IUserData } from 'src/app/modules/shared/models/userData';
+import { getUserFromLocalStorage } from 'src/assets/config/utils';
 
 @Component({
   selector: 'rpg-home',
@@ -10,6 +11,17 @@ import { getItemFromLocalStorage } from 'src/assets/config/utils';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  user: IUserData = {
+    email: '',
+    name: '',
+    surname: '',
+    age: 0,
+    gender: '',
+    city: '',
+    state: '',
+    createdDate: ''
+  };
+
   name = '';
   flagLogin: boolean = false;
 
@@ -19,9 +31,9 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const user = getItemFromLocalStorage('user');
-    console.log('nome :', user.name);
-    this.name = user.name;
+    this.user = getUserFromLocalStorage();
+    this.name = this.user.name;
+    console.log('nome :', this.name);
   }
 
   studyPaths(): void {

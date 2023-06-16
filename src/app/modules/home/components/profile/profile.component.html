@@ -2,27 +2,27 @@
   <h2 class="profile-title">Perfil</h2>
   <div class="profile-details">
     <div class="form-group">
-      <label for="name">Nome</label>
+      <label class="inputs-labels" for="name">Nome</label>
       <input class="input-form-profile" type="text" id="name" name="name" [(ngModel)]="user.name" [attr.disabled]="!editMode ? 'disabled' : null" [placeholder]="editMode ? 'Digite o nome' : ''">
     </div>
     <div class="form-group">
-      <label for="surname">Sobrenome</label>
+      <label class="inputs-labels" for="surname">Sobrenome</label>
       <input class="input-form-profile" type="text" id="surname" name="surname" [(ngModel)]="user.surname" [attr.disabled]="!editMode ? 'disabled' : null" [placeholder]="editMode ? 'Digite o sobrenome' : ''">
     </div>
     <div class="form-group">
-      <label for="age">Idade</label>
+      <label class="inputs-labels" for="age">Idade</label>
       <input class="input-form-profile" type="number" id="age" name="age" [(ngModel)]="user.age" [attr.disabled]="!editMode ? 'disabled' : null" [placeholder]="editMode ? 'Digite a idade' : ''">
     </div>
     <div class="form-group">
-      <label for="gender">Gênero</label>
+      <label class="inputs-labels" for="gender">Gênero</label>
       <input class="input-form-profile" type="text" id="gender" name="gender" [(ngModel)]="user.gender" [attr.disabled]="!editMode ? 'disabled' : null" [placeholder]="editMode ? 'Digite o gênero' : ''">
     </div>
     <div class="form-group">
-      <label for="city">Cidade</label>
+      <label class="inputs-labels" for="city">Cidade</label>
       <input class="input-form-profile" type="text" id="city" name="city" [(ngModel)]="user.city" [attr.disabled]="!editMode ? 'disabled' : null" [placeholder]="editMode ? 'Digite a cidade' : ''">
     </div>
     <div class="form-group">
-      <label for="state">Estado</label>
+      <label class="inputs-labels" for="state">Estado</label>
       <input class="input-form-profile" type="text" id="state" name="state" maxlength="2" [(ngModel)]="user.state" [attr.disabled]="!editMode ? 'disabled' : null" [placeholder]="editMode ? 'Digite o estado' : ''">
     </div>
   </div>
@@ -30,4 +30,6 @@
     <button class="action-profile-button" *ngIf="!editMode" (click)="toggleEditMode()">Editar Perfil</button>
     <button class="action-profile-button" *ngIf="editMode" (click)="saveProfile()">Salvar</button>
   </div>
+  <div class="home-access" (click)="goToHome()">Para voltar a home, <span class="here">clique aqui</span></div>
+  <div *ngIf="loading" class="loader"></div>
 </div>

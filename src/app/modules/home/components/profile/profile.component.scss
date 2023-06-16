@@ -29,16 +29,13 @@
 .input-form-profile {
   border-radius: 12px;
   width: 313.5px;
-}
-
-label {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-input {
   padding: 0.5rem;
   font-size: 1rem;
+}
+
+.inputs-labels {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 
 .action-profile-button {
@@ -56,13 +53,23 @@ input {
   background-color: #007bff;
 }
 
+.home-access {
+  text-align: center;
+  margin-top: 0.5rem;
+  color: darkgreen;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+.here {
+  color: peru;
+}
+
 @media (max-width: 768px) {
   .profile-title {
     font-size: 2rem;
-  }
-
-  input {
-    font-size: 1rem;
   }
 
   .action-profile-button {

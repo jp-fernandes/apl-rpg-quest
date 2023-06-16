@@ -4,11 +4,11 @@
     </h2>
     <form class="login-form" (submit)="login($event, emailInput.value, passwordInput.value)">
       <div class="form-group">
-        <label for="email">E-mail</label>
+        <label class="inputs-labels" for="email">E-mail</label>
         <input class="input-form-login" type="email" id="email" name="email" placeholder="Digite seu e-mail" #emailInput required>
       </div>
       <div class="form-group">
-        <label for="password">Senha</label>
+        <label class="inputs-labels" for="password">Senha</label>
         <input class="input-form-login" type="password" id="password" name="password" placeholder="Digite sua senha" #passwordInput required>
       </div>
       <button class="login-button">Entrar</button>

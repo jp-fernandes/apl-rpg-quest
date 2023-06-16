@@ -1,6 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Router } from '@angular/router';
+import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 import { IUserData } from 'src/app/modules/shared/models/userData';
-import { getEmptyFields, handleMessage } from 'src/assets/config/utils';
+import { customSettings } from 'src/assets/config/customSettings';
+import { getEmptyFields, getUserFromLocalStorage, handleMessage } from 'src/assets/config/utils';
 
 @Component({
   selector: 'rpg-profile',
@@ -8,23 +13,38 @@ import { getEmptyFields, handleMessage } from 'src/assets/config/utils';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  user: IUserData = {
-    name: 'John',
-    surname: 'Doe',
-    age: 25,
-    gender: 'Male',
-    city: 'New York',
-    state: 'NY'
-  };
-  editMode: boolean = false;
 
-  constructor() { }
+  user: IUserData = {
+    email: '',
+    name: '',
+    surname: '',
+    age: 0,
+    gender: '',
+    city: '',
+    state: '',
+    createdDate: ''
+  };
+  imageError: string = "/assets/images/modal/modal-error.svg"
+  imageSuccess: string = "/assets/images/modal/modal-success.svg"
+  editMode: boolean = false;
+  loading: boolean = false;
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private matBottomSheet: MatBottomSheet
+  ) { }
 
   ngOnInit(): void {
+    this.user = getUserFromLocalStorage();
   }
 
   toggleEditMode(): void {
     this.editMode = !this.editMode;
+  }
+
+  goToHome(): void {
+    this.router.navigate(['/home']);
   }
 
   saveProfile(): void {
@@ -34,26 +54,78 @@ export class ProfileComponent implements OnInit {
       surname: this.user.surname,
       gender: this.user.gender,
       city: this.user.city,
-      state: this.user.state.toUpperCase()
+      state: this.user.state.toUpperCase(),
+      email: this.user.email //primary key
     };
 
     const emptyFields = getEmptyFields(payload);
 
     if (emptyFields.length > 0) {
+      const messageError = "Por favor, Informe o(s) campo(s) abaixo:"
       const missingFieldsMessage = handleMessage(emptyFields);
-      console.log('Informe o(s) Campo(s) vazio(s):', missingFieldsMessage);
-      //To-Do
-      // 1 - Exibir mensagem para o usuário informando os campos vazios
+      this.openModalInfo(
+        this.imageError,
+        "OK",
+        messageError,
+        missingFieldsMessage
+      );
       return;
     } else {
-      this.editMode = !this.editMode;
       console.log('Dados salvos:', payload);
-      // Continuar com o salvamento dos dados
+      this.updateUserProfile(payload);
     }
     //To-Do
-    // 1 - Fazer um get no user - Ver se precisa colocar LOADER
-    // 2 - Enviar os dados para o serviço. - Ja tem servico pronto o Update User by Email
-    // 3 - Colocar uma mensagem de sucesso
-    // 4 - Validar o campo de idade para apenas 2 caracteres
+    // 1 - Validar o campo de idade para apenas 2 caracteres
+  }
+
+  updateUserProfile(payload: any): void {
+    const apiUrl = `${customSettings.apiUrl}/users`;
+    this.loading = true;
+
+    this.http.put(apiUrl, payload).subscribe(
+      (response) => {
+        this.loading = false;
+        this.editMode = !this.editMode;
+        (localStorage.setItem('user', JSON.stringify({ ...payload, createdDate: this.user.createdDate })));
+        const messageSucess = "Seu perfil foi atualizado com sucesso!";
+        const titleSucess = `Parabéns, <strong>${payload.name}</strong>!`;
+        this.openModalInfo(
+          this.imageSuccess,
+          "Voltar",
+          titleSucess,
+          messageSucess
+        );
+
+      },
+      (error) => {
+        this.loading = false;
+        this.editMode = true;
+        const messageError = this.handleErrorUpdateProfile(error.message);
+        this.openModalInfo(
+          this.imageError,
+          "Voltar",
+          "Erro",
+          messageError
+        );
+      }
+    );
+  }
+
+  openModalInfo(image: string, buttonText: string, title: string, text: string) {
+    this.matBottomSheet.open(ModalInfoComponent, {
+      data: {
+        image: image,
+        buttonText: buttonText,
+        title: title,
+        text: text
+      },
+      panelClass: 'container-modal'
+    })
+      .afterDismissed()
+  }
+
+  handleErrorUpdateProfile(error: any): string {
+    console.error("Erro nao tratado ", error);
+    return "Ocorreu um erro na atualização do perfil, por favor tente novamente!";
   }
 }

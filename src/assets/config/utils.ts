@@ -8,6 +8,16 @@ export function getItemFromLocalStorage(key: string): any {
   }
 }
 
+export function getUserFromLocalStorage(): any {
+  const userString = localStorage.getItem('user');
+  if (userString) {
+    return JSON.parse(userString);
+  } else {
+    console.log("Usuário não encontrado no localStorage");
+    return {};
+  }
+}
+
 export function getEmptyFields(payload: any): string[] {
   const emptyFields = [];
   const fields = Object.keys(payload);
