@@ -1,76 +1,72 @@
 .register-container {
-    background-image: url("/assets/images/common/background-base.png");
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  background-image: url("/assets/images/common/background-base.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .register-title {
-    font-size: 2.2rem;
-    margin-bottom: 50px;
+  font-size: 2.2rem;
+  margin-bottom: 50px;
 }
 
 .register-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 .form-group-inline {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .input-form-register {
-    border-radius: 12px;
-    width: 313.5px;
+  border-radius: 12px;
+  width: 313.5px;
+  padding: 0.5rem;
+  font-size: 1rem;
 }
 
-label {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+.inputs-labels {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 
-input {
-    padding: 0.5rem;
-    font-size: 1rem;
-}
-
-.forgot-password,
 .has-registration {
-    text-align: center;
-    margin-top: 0.5rem;
-    color: darkgreen;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 30px;
-    font-size: 18px;
+  text-align: center;
+  margin-top: 0.5rem;
+  color: darkgreen;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 30px;
+  font-size: 20px;
 }
 
 .register {
-    color: peru;
+  color: peru;
 }
 
 .register-button {
-    padding: 1rem 2rem;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 10px;
-    margin-top: 10px;
+  padding: 1rem 2rem;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
 .register-button:hover {
@@ -78,15 +74,15 @@ input {
 }
 
 @media (max-width: 768px) {
-    .register-title {
-      font-size: 2rem;
-    }
+  .register-title {
+    font-size: 2rem;
+  }
 
-    input {
-        font-size: 1rem;
-    }
+  .inputs-labels {
+    font-size: 1rem;
+  }
 
-    .register-button {
-        font-size: 1.2rem;
-    }
+  .register-button {
+    font-size: 1.2rem;
+  }
 }

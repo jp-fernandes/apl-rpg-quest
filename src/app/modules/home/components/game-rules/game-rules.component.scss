@@ -1,0 +1,83 @@
+.game-rules-container {
+  background-image: url("/assets/images/common/background-base.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.game-rules-title {
+  font-size: 3rem;
+  margin-bottom: 50px;
+}
+
+.game-rules-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sub-title {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  color: green;
+}
+
+.box-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.info-text {
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+.info-text-weights {
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+.home-access {
+  text-align: center;
+  margin-top: 0.5rem;
+  color: darkgreen;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+.here {
+  color: peru;
+}
+
+@media (max-width: 768px) {
+  .game-rules-title {
+    font-size: 2.3rem;
+  }
+
+  .sub-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .box-group {
+    padding: 10px;
+  }
+
+  .info-text {
+    font-size: 18px;
+    padding: 2px;
+  }
+
+  .info-text-weights {
+    font-size: 18px;
+    padding: 2px;
+  }
+}

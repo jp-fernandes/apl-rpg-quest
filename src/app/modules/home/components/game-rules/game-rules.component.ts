@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'rpg-game-rules',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameRulesComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
+  goToHome() {
+    this.router.navigate(['/home']);
+  }
+
+  //To-do
+  // 1 - Verificar como vai ficar a centralizacao da tela de regras
 }
