@@ -24,11 +24,12 @@ export class RegisterComponent {
   register(event: Event, email: string, password: string, confirmPassword: string, confirmEmail: string): void {
     event.preventDefault();
 
-    if (confirmEmail !== email) {
-      const emailError = "E-mails não correspondentes. Por favor, verifique novamente."
+    if (!email || confirmEmail !== email) {
+      const emailError = confirmEmail !== email ? "E-mails não correspondentes. Por favor, verifique novamente." : "Por favor, preencha seu e-mail corretamente";
       this.openModalInfo(
         this.imageError,
         "Voltar",
+        "",
         "Ops!",
         emailError
       );
@@ -36,11 +37,12 @@ export class RegisterComponent {
       return;
     }
 
-    if (confirmPassword !== password) {
-      const passwordError = "Senhas não correspondentes. Por favor, verifique novamente."
+    if (!password || confirmPassword !== password) {
+      const passwordError = confirmPassword !== password ? "Senhas não correspondentes. Por favor, verifique novamente." : "Por favor, preencha sua senha corretamente";
       this.openModalInfo(
         this.imageError,
         "Voltar",
+        "",
         "Ops!",
         passwordError
       );
@@ -57,6 +59,7 @@ export class RegisterComponent {
         this.openModalInfo(
           this.imageSuccess,
           "Ir para o login",
+          "",
           "Parabéns!",
           messageSucess
         );
@@ -64,9 +67,12 @@ export class RegisterComponent {
       })
       .catch((error) => {
         const messageError = this.handleErrorRegister(error.message);
+        const buttonText = this.flagForget ? "Redefinir senha" : "Voltar";
+        const buttonText2 = this.flagForget ? "Voltar" : '';
         this.openModalInfo(
           this.imageError,
-          this.flagForget ? "Redefinir senha" : "Voltar",
+          buttonText,
+          buttonText2,
           "Erro",
           messageError
         );
@@ -77,11 +83,12 @@ export class RegisterComponent {
     this.router.navigate(['/login']);
   }
 
-  openModalInfo(image: string, buttonText: string, title: string, text: string) {
+  openModalInfo(image: string, buttonText: string, buttonText2: string, title: string, text: string) {
     this.matBottomSheet.open(ModalInfoComponent, {
       data: {
         image: image,
         buttonText: buttonText,
+        buttonText2: buttonText2,
         title: title,
         text: text
       },
