@@ -10,7 +10,7 @@
 }
 
 .create-profile-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin-bottom: 50px;
 }
 
@@ -52,16 +52,20 @@ select {
     margin-top: 10px;
 }
 
+.create-profile-button:hover {
+  background-color: #007bff;
+}
+
 @media (max-width: 768px) {
     .create-profile-title {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
 
     input {
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     .create-profile-button {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 }

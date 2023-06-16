@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { appSettings } from 'app-settings';
+import { customSettings } from 'src/assets/config/customSettings';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 
@@ -42,7 +42,7 @@ export class CreateProfileComponent implements OnInit {
   ): void {
     event.preventDefault();
 
-    //To-do 
+    //To-do
     //1 - Validar o campo de idade para apenas 2 caracteres
     const ageNumber = parseInt(age, 10);
     const stateUpper = state.toUpperCase();
@@ -74,10 +74,11 @@ export class CreateProfileComponent implements OnInit {
   }
 
   createUserProfile(payload: any): void {
-    const apiUrl = `${appSettings.apiUrl}/users`;
+    const apiUrl = `${customSettings.apiUrl}/users`;
 
     this.http.post(apiUrl, payload).subscribe(
       (response) => {
+        localStorage.setItem('user', JSON.stringify(payload));
         const messageSucess = "Seu perfil foi criado com sucesso! Agora vamos começar o aprendizado!";
         const titleSucess = `Parabéns, <strong>${payload.name}</strong>!`;
         this.flagHome = true;

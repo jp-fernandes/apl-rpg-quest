@@ -62,10 +62,17 @@
     width: 47.5%;
 }
 
-// .modal-footer__button:disabled {
-//     background: #bdbdbd;
-//     border: #bdbdbd 1px solid;
-// }
+.modal-footer__button-2 {
+    background-color: white;
+    color: black;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    margin-top: 10px;
+    height: 40px;
+    font-weight: 700;
+    width: 47.5%;
+    margin-left: 20px;
+}
 
 .width100 {
     width: 100%;

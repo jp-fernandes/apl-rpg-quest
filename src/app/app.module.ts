@@ -12,6 +12,8 @@ import localePt from '@angular/common/locales/pt';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './modules/shared/shared.module';
+import { HomeModule } from './modules/home/home.module';
+import { AuthModule } from './modules/core/authentication/auth.module';
 
 registerLocaleData(localePt);
 
@@ -29,7 +31,9 @@ registerLocaleData(localePt);
     AngularFireAuthModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    HomeModule,
+    AuthModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' }

@@ -6,14 +6,24 @@ import { RegisterComponent } from './modules/core/authentication/components/regi
 import { ForgetPasswordComponent } from './modules/core/authentication/components/forget-password/forget-password.component';
 import { HomeComponent } from './modules/home/components/home/home.component';
 import { CreateProfileComponent } from './modules/home/components/create-profile/create-profile.component';
+import { GameRulesComponent } from './modules/home/components/game-rules/game-rules.component';
+import { ProfileComponent } from './modules/home/components/profile/profile.component';
+import { CurrentPerformanceComponent } from './modules/home/components/current-performance/current-performance.component';
+import { ExamsComponent } from './modules/home/components/exams/exams.component';
+import { StudyComponent } from './modules/home/components/study/study.component';
 
 const routes: Routes = [
-  {path: '', component: WelcomeComponent},
-  {path: 'login', component: LoginComponent},
+  { path: '', component: WelcomeComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'forget-password', component: ForgetPasswordComponent },
   { path: 'create-profile', component: CreateProfileComponent },
-  { path: 'home', component: HomeComponent }
+  { path: 'home', component: HomeComponent },
+  { path: 'study', component: StudyComponent },
+  { path: 'exams', component: ExamsComponent },
+  { path: 'current-performance', component: CurrentPerformanceComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'game-rules', component: GameRulesComponent }
 ]
 
 @NgModule({

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { appSettings } from 'app-settings';
+import { customSettings } from 'src/assets/config/customSettings';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 
@@ -26,6 +26,7 @@ export class LoginComponent {
 
   imageError: string = "/assets/images/modal/modal-error.svg"
   titleError: string = ""
+  loading: boolean = false;
 
   //To-do
   // Tentar personalizar os required
@@ -50,22 +51,23 @@ export class LoginComponent {
   }
 
   checkProfileExistence(email: string): void {
+    this.loading = true;
     // Chamar a API para verificar se o perfil do usuário já existe
-    const apiUrl = `${appSettings.apiUrl}/users/${encodeURIComponent(email)}`;
+    const apiUrl = `${customSettings.apiUrl}/users/${encodeURIComponent(email)}`;
 
     this.http.get<ProfileExistenceResponse>(apiUrl)
       .subscribe(
         (response) => {
-
-          //To-do
-          // 1 - Colocar um loader pq ta demorando muito.
+          this.loading = false;
           if (response && response.code == 404) {
             this.router.navigate(['/create-profile'], { state: { email: email } });
           } else {
+            localStorage.setItem('user', JSON.stringify(response));
             this.router.navigate(['/home']);
           }
         },
         (error) => {
+          this.loading = false;
           const messageError = error && error.error && error.error.message || "Ocorreu um erro, por favor tente novamente!";
           this.openModalInfo(
             this.imageError,
