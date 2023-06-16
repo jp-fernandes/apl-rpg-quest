@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-current-performance',
+  selector: 'rpg-current-performance',
   templateUrl: './current-performance.component.html',
   styleUrls: ['./current-performance.component.scss']
 })

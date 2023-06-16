@@ -1,2 +1,6 @@
 * Pegar icone de trofeu e colocar ao chegar alguma conquista - SVG
-* Validar campos em geral, testar todos, tipos de dados diferentes
+* Validar campos em geral, testar todos, tipos de dados diferentes - Os required NAO estao funcionando
+* verificar se os todos os selector dos components estao com 'rpg' ou 'app'
+
+
+* cuidado ao usar o profile como base pois os dois botoes tem tamanhos fixos
