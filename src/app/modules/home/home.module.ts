@@ -8,6 +8,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { CurrentPerformanceComponent } from './components/current-performance/current-performance.component';
 import { ExamsComponent } from './components/exams/exams.component';
 import { StudyComponent } from './components/study/study.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { StudyComponent } from './components/study/study.component';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class HomeModule { }

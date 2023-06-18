@@ -74,8 +74,6 @@ export class ProfileComponent implements OnInit {
       console.log('Dados salvos:', payload);
       this.updateUserProfile(payload);
     }
-    //To-Do
-    // 1 - Validar o campo de idade para apenas 2 caracteres
   }
 
   updateUserProfile(payload: any): void {

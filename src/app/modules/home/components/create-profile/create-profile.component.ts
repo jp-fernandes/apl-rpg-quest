@@ -42,8 +42,6 @@ export class CreateProfileComponent implements OnInit {
   ): void {
     event.preventDefault();
 
-    //To-do
-    //1 - Validar o campo de idade para apenas 2 caracteres
     const ageNumber = parseInt(age, 10);
     const stateUpper = state.toUpperCase();
 
