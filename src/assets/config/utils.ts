@@ -31,6 +31,23 @@ export function getEmptyFields(payload: any): string[] {
   return emptyFields;
 }
 
+export function getTranslatedSubjectName(option: string) {
+
+  if (option == "mathematics") {
+    return "Matématica";
+  } else if (option == "portuguese") {
+    return "Língua Portuguesa";
+  } else if (option == "sciences") {
+    return "Ciências Naturais";
+  } else if (option == "history") {
+    return "História";
+  } else if (option == "geography") {
+    return "Geografia";
+  } else {
+    return "Unknown";
+  }
+}
+
 export function handleMessage(emptyFields: string[]): string {
   const fieldNames: Record<string, string> = {
     age: 'Idade',

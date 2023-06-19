@@ -1,1 +1,17 @@
-<p>study works!</p>
+<div class="study-container">
+  <h2 class="study-title">
+    <img class="logo-image" src="/assets/images/common/books.png" alt="Logo"> Matérias
+  </h2>
+
+  <h3 class="study-sub-title">Selecione a matéria que você quer estudar a partir das opções a seguir.</h3>
+
+  <div class="buttons-section">
+    <button (click)="confirmSubjectSelection('mathematics')" class="study-buttons"><i class="fas fa-calculator"></i> Matématica</button>
+    <button (click)="confirmSubjectSelection('portuguese')" class="study-buttons"><i class="fas fa-book"></i> Língua Portuguesa</button>
+    <button (click)="confirmSubjectSelection('sciences')" class="study-buttons"><i class="fas fa-flask"></i> Ciências Naturais</button>
+    <button (click)="confirmSubjectSelection('history')" class="study-buttons"><i class="fas fa-landmark"></i> História</button>
+    <button (click)="confirmSubjectSelection('geography')" class="study-buttons"><i class="fas fa-globe"></i> Geografia</button>
+  </div>
+
+  <div class="home-access" (click)="goToHome()">Para voltar à home, <span class="here">clique aqui</span></div>
+</div>

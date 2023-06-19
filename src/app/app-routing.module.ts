@@ -11,6 +11,7 @@ import { ProfileComponent } from './modules/home/components/profile/profile.comp
 import { CurrentPerformanceComponent } from './modules/home/components/current-performance/current-performance.component';
 import { ExamsComponent } from './modules/home/components/exams/exams.component';
 import { StudyComponent } from './modules/home/components/study/study.component';
+import { SubjectOverviewComponent } from './modules/home/components/subject-overview/subject-overview.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'create-profile', component: CreateProfileComponent },
   { path: 'home', component: HomeComponent },
   { path: 'study', component: StudyComponent },
+  { path: 'subject-overview', component: SubjectOverviewComponent },
   { path: 'exams', component: ExamsComponent },
   { path: 'current-performance', component: CurrentPerformanceComponent },
   { path: 'profile', component: ProfileComponent },
