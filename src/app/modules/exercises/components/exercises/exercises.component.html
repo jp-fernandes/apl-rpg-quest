@@ -1,0 +1,15 @@
+<div>
+    <h1>Componente Novo</h1>
+    <p>{{ question }}</p>
+    <ul>
+        <li *ngFor="let option of options">
+            <!-- <input type="radio" name="resposta" [(ngModel)]="respostaSelecionada" [value]="option"> -->
+            <input type="radio" name="resposta">
+            {{ option }}
+        </li>
+    </ul>
+    <button (click)="verificarResposta()">Verificar</button>
+    <p *ngIf="respostaCorreta !== null">
+        Sua resposta está {{ respostaCorreta ? 'correta!' : 'incorreta!' }}
+    </p>
+</div>

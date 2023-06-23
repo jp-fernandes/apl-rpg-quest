@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SubjectService } from '../../services/subject.service';
 
 @Component({
-  selector: 'app-subject-overview',
+  selector: 'rpg-subject-overview',
   templateUrl: './subject-overview.component.html',
   styleUrls: ['./subject-overview.component.scss']
 })
