@@ -6,6 +6,7 @@
 * cuidado ao usar o profile como base pois os dois botoes tem tamanhos fixos
 * mudar o horario da API - Parte de CREATED - horario ta errado do Brasil
 
+--- TIRAR MODULOS DA HOME
 
 
 * - Envie sugestao - bug - elogio - critica - para eu poder melhar -------------- IMPORTANTE CRIAR ESSE ENDPOINT
