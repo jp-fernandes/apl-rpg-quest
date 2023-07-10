@@ -10,6 +10,7 @@ import { ExamsComponent } from './components/exams/exams.component';
 import { StudyComponent } from './components/study/study.component';
 import { SharedModule } from '../shared/shared.module';
 import { SubjectOverviewComponent } from './components/subject-overview/subject-overview.component';
+import { FeedbackComponent } from './components/feedback/feedback.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SubjectOverviewComponent } from './components/subject-overview/subject-
     CurrentPerformanceComponent,
     ExamsComponent,
     StudyComponent,
-    SubjectOverviewComponent
+    SubjectOverviewComponent,
+    FeedbackComponent
   ],
   imports: [
     CommonModule,

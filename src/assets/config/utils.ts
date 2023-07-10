@@ -4,7 +4,7 @@ export function getItemFromLocalStorage(key: string): any {
     return JSON.parse(itemString);
   } else {
     console.log(`Item '${key}' não encontrado no localStorage`);
-    return {};
+    return null;
   }
 }
 
@@ -14,7 +14,7 @@ export function getUserFromLocalStorage(): any {
     return JSON.parse(userString);
   } else {
     console.log("Usuário não encontrado no localStorage");
-    return {};
+    return null;
   }
 }
 

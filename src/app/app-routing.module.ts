@@ -12,6 +12,7 @@ import { CurrentPerformanceComponent } from './modules/home/components/current-p
 import { ExamsComponent } from './modules/home/components/exams/exams.component';
 import { StudyComponent } from './modules/home/components/study/study.component';
 import { SubjectOverviewComponent } from './modules/home/components/subject-overview/subject-overview.component';
+import { FeedbackComponent } from './modules/home/components/feedback/feedback.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'exams', component: ExamsComponent },
   { path: 'current-performance', component: CurrentPerformanceComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'feedback', component: FeedbackComponent },
   { path: 'game-rules', component: GameRulesComponent }
 ]
 

@@ -24,7 +24,7 @@ export class LoginComponent {
     private http: HttpClient
   ) { }
 
-  imageError: string = "/assets/images/modal/modal-error.svg"
+  imageError: string = "/assets/images/modal/modal-error.svg";
   titleError: string = ""
   loading: boolean = false;
 

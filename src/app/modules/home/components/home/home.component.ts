@@ -1,9 +1,12 @@
+import { HttpClient } from '@angular/common/http';
+import { ICompletedResponse } from './../../interfaces/ICompletedResponse';
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 import { IUserData } from 'src/app/modules/shared/models/userData';
-import { getUserFromLocalStorage } from 'src/assets/config/utils';
+import { customSettings } from 'src/assets/config/customSettings';
+import { getItemFromLocalStorage, getUserFromLocalStorage } from 'src/assets/config/utils';
 
 @Component({
   selector: 'rpg-home',
@@ -24,15 +27,19 @@ export class HomeComponent implements OnInit {
 
   name = '';
   flagLogin: boolean = false;
+  loading: boolean = false;
+  imageError: string = "/assets/images/modal/modal-error.svg";
+  email!: string;
 
   constructor(
     private matBottomSheet: MatBottomSheet,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
     this.user = getUserFromLocalStorage();
-    this.name = this.user.name;
+    this.name = this.user && this.user.name;
     console.log('nome :', this.name);
   }
 
@@ -43,9 +50,7 @@ export class HomeComponent implements OnInit {
   }
 
   takeExams(): void {
-    //To-Do
-    // 1 - Verificar se o usuário estudou algum conteúdo na página de "trilhas para estudo" - Só permitir fazer a prova se tiver feito isso.
-    this.router.navigate(['/exams']);
+    this.checkSubjectCompletion();
   }
 
   restartFromZero(): void {
@@ -72,6 +77,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/game-rules']);
   }
 
+  goToFeeback(): void {
+    this.router.navigate(['/feedback']);
+  }
+
   goToLogin() {
     this.flagLogin = true;
     this.openModalInfoChoose(
@@ -79,6 +88,70 @@ export class HomeComponent implements OnInit {
       "Sim",
       "Não"
     );
+  }
+
+  checkSubjectCompletion(): void {
+    const completed = getItemFromLocalStorage('completed');
+
+    if (completed == null) {
+      this.callCheckSubjectCompletion();
+    } else if (completed) {
+      this.router.navigate(['/exams']);
+    } else {
+      this.messageErrorCheck();
+    }
+  }
+
+  callCheckSubjectCompletion() {
+    this.loading = true;
+    const apiUrl = `${customSettings.apiUrl}/subjects/check-status/${encodeURIComponent(this.user.email)}`;
+
+    this.http.get<ICompletedResponse>(apiUrl)
+      .subscribe(
+        (response) => {
+          this.loading = false;
+          if (response && response.completed) {
+            localStorage.setItem('completed', "true");
+            this.router.navigate(['/exams']);
+          } else {
+            localStorage.setItem('completed', "false");
+            this.messageErrorCheck();
+          }
+        },
+        (error) => {
+          this.loading = false;
+          const messageError = error && error.error && error.error.message || "Ocorreu um erro, por favor tente novamente!";
+          this.openModalInfo(
+            this.imageError,
+            "Voltar",
+            "Erro",
+            messageError
+          );
+        }
+      );
+  }
+
+  messageErrorCheck() {
+    const messageError = `Você precisa completar pelo menos 1 atividade antes de fazer a prova acesse: <strong>Trilhas para Estudo</strong>.`
+    this.openModalInfo(
+      "",
+      "OK",
+      "<strong>Erro</strong>",
+      messageError
+    );
+  }
+
+  openModalInfo(image: string, buttonText: string, title: string, text: string) {
+    this.matBottomSheet.open(ModalInfoComponent, {
+      data: {
+        image: image,
+        buttonText: buttonText,
+        title: title,
+        text: text
+      },
+      panelClass: 'container-modal'
+    })
+      .afterDismissed()
   }
 
   openModalInfoChoose(title: string, confirmButtonText: string, cancelButtonText: string) {

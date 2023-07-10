@@ -8,12 +8,12 @@
 
   <div class="buttons-section">
     <button (click)="studyPaths()" class="main-buttons"><i class="fas fa-book"></i> Trilhas para Estudo</button>
-    <button (click)="takeExams()" class="main-buttons"><i class="fas fa-pencil-alt"></i> Realizar Provas</button>
+    <button (click)="takeExams()" class="main-buttons"><div *ngIf="loading" class="loader-menu_itens"></div> Realizar Provas</button>
     <button class="main-buttons"><i class="fas fa-redo"></i> Recomeçar do Zero</button>
     <button (click)="viewCurrentPerformance()" class="main-buttons"><i class="fas fa-trophy"></i> Desempenho Atual</button>
     <button (click)="viewProfile()" class="main-buttons"><i class="fas fa-user"></i> Perfil</button>
     <button (click)="viewGameRules()" class="main-buttons"><i class="fas fa-info-circle"></i> Regras do Jogo</button>
-    <button class="main-buttons"><i class="fas fa-comment"></i> Feedback</button>
+    <button (click)="goToFeeback()" class="main-buttons"><i class="fas fa-comment"></i> Feedback</button>
   </div>
 
   <div class="login-access" (click)="goToLogin()">Se deseja sair do jogo, <span class="here">clique aqui</span></div>
