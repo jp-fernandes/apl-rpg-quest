@@ -1,8 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
+import { IUserData } from 'src/app/modules/shared/models/userData';
+import { customSettings } from 'src/assets/config/customSettings';
+import { getUserFromLocalStorage } from 'src/assets/config/utils';
 
 @Component({
   selector: 'rpg-feedback',
@@ -10,23 +14,39 @@ import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info
   styleUrls: ['./feedback.component.scss']
 })
 export class FeedbackComponent implements OnInit {
+  user: IUserData = {
+    email: '',
+    name: '',
+    surname: '',
+    age: 0,
+    gender: '',
+    city: '',
+    state: '',
+    createdDate: ''
+  };
+
   feedbackForm!: FormGroup;
-  imageError: string = "/assets/images/modal/modal-error.svg"
+  imageError: string = "/assets/images/modal/modal-error.svg";
+  imageSuccess: string = "/assets/images/modal/modal-success.svg";
   messageError: string = '';
   messageValid: boolean = false;
+  loading: boolean = false;
+  flagHome: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private matBottomSheet: MatBottomSheet,
-    // private feedbackService: FeedbackService
+    private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
+    this.user = getUserFromLocalStorage();
     this.feedbackForm = this.formBuilder.group({
       rating: ['', Validators.required],
       suggestion: ['', Validators.required]
     });
+
   }
 
   goToHome() {
@@ -34,30 +54,56 @@ export class FeedbackComponent implements OnInit {
   }
 
   submitFeedback(): void {
-
     if (this.feedbackForm.valid) {
       this.messageError = "";
       this.messageValid = false;
       const feedbackData = this.feedbackForm.value;
-      console.log("valores recebidos ", feedbackData);
-      // this.feedbackService.sendFeedback(feedbackData).subscribe(
-      //   (response) => {
-      //     // Lógica de manipulação da resposta de sucesso, se necessário
-      //   },
-      //   (error) => {
-      //     // Lógica de manipulação do erro, se necessário
-      //   }
-      // );
+
+      const payload = {
+        rating: feedbackData.rating,
+        suggestion: feedbackData.suggestion,
+        name: this.user.name,
+        surname: this.user.surname,
+        email: this.user.email
+      };
+
+      this.callFeedback(payload);
+
     } else {
       this.messageError = this.feedbackForm.value.suggestion == "" ? "Por favor, preencha o campo de sugestão.." : "Por favor, escolha uma nota";
       this.messageValid = true;
-      // this.openModalInfo(
-      //   this.imageError,
-      //   "Ir para o login",
-      //   "Ops!",
-      //   messageError
-      // );
     }
+  }
+
+  callFeedback(payload: any): void {
+    const apiUrl = `${customSettings.apiUrl}/feedback`;
+    this.loading = true;
+
+    this.http.post(apiUrl, payload).subscribe(
+      (response) => {
+        this.loading = false;
+        const messageSucess = "Seu feedback foi enviado com sucesso! Continue seu aprendizado no jogo!";
+        const titleSucess = `<strong>Incrível!</strong>`;
+        this.flagHome = true;
+        this.openModalInfo(
+          this.imageSuccess,
+          "Ir para home",
+          titleSucess,
+          messageSucess
+        );
+
+      },
+      (error) => {
+        this.loading = false;
+        const messageError = "Ocorreu um erro no envio do seu feedback, por favor tente novamente!";
+        this.openModalInfo(
+          this.imageError,
+          "Voltar",
+          "Erro",
+          messageError
+        );
+      }
+    );
   }
 
   openModalInfo(image: string, buttonText: string, title: string, text: string) {
@@ -71,5 +117,10 @@ export class FeedbackComponent implements OnInit {
       panelClass: 'container-modal'
     })
       .afterDismissed()
+      .subscribe(x => {
+        if (this.flagHome) {
+          this.router.navigate(['/home']);
+        }
+      })
   }
 }

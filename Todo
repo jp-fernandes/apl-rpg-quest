@@ -4,7 +4,7 @@
 * fazer um interceptador generico para logar rota e demais coisas no banco do Firebase - ver o que preciso LOGAR exemplo quantos users tem no APP
 * Fazer validacao de retomada caso o usuario saida da pagina e volte, retomar progresso atual.
 * cuidado ao usar o profile como base pois os dois botoes tem tamanhos fixos
-
+* ARRUMAR REGRAS DO JOGO - css ta zoado
 
 
 * - Envie sugestao - bug - elogio - critica - para eu poder melhar -------------- IMPORTANTE CRIAR ESSE ENDPOINT
