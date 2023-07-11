@@ -9,7 +9,7 @@ export class SubjectService {
       case 'portuguese':
         return {
           title: 'Língua Portuguesa',
-          overview: 'A Língua Portuguesa é um idioma amplamente falado e escrito em diversos países ao redor do mundo. Ela desempenha um papel fundamental na comunicação, na literatura e na cultura. Nessa disciplina, vamos explorar as principais características da língua, a gramática, a ortografia e a interpretação de textos, desenvolvendo habilidades de escrita e comunicação efetiva.',
+          overview: 'A Língua Portuguesa é um idioma de ampla utilização em vários países. Ela é essencial para a comunicação, literatura e cultura. Nesta disciplina, estudaremos suas principais características, como gramática, ortografia e interpretação de textos, aprimorando habilidades de escrita e comunicação eficaz.',
           subTopics: [
             'Gramática: Estudaremos as regras e estruturas da língua portuguesa, incluindo os tempos verbais, a concordância nominal e verbal, e a pontuação.',
             'Ortografia: Exploraremos as regras ortográficas, incluindo o uso correto das letras, acentuação e pontuação.',

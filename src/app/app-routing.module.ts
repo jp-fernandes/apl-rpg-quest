@@ -13,6 +13,7 @@ import { ExamsComponent } from './modules/home/components/exams/exams.component'
 import { StudyComponent } from './modules/home/components/study/study.component';
 import { SubjectOverviewComponent } from './modules/home/components/subject-overview/subject-overview.component';
 import { FeedbackComponent } from './modules/home/components/feedback/feedback.component';
+import { ExercisesComponent } from './modules/exercises/components/exercises/exercises.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'create-profile', component: CreateProfileComponent },
   { path: 'home', component: HomeComponent },
   { path: 'study', component: StudyComponent },
+  { path: 'exercises', component: ExercisesComponent },
   { path: 'subject-overview', component: SubjectOverviewComponent },
   { path: 'exams', component: ExamsComponent },
   { path: 'current-performance', component: CurrentPerformanceComponent },
