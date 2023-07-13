@@ -1,4 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Router } from '@angular/router';
+import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
+import Images from 'src/app/modules/shared/enums/images.enum';
+import { Question } from 'src/app/modules/shared/models/question';
+import { customSettings } from 'src/assets/config/customSettings';
 
 @Component({
   selector: 'rpg-exercises',
@@ -10,8 +17,16 @@ export class ExercisesComponent implements OnInit {
   currentPageIndex = 0;
   questionsPerPage = 2;
   localStorageKey = 'userScore';
-  questions: any[] = [];
+  questions: Question[] = [];
   totalScore = 0;
+  loading: boolean = false;
+  imageError: string = Images.ERROR;;
+
+  constructor(
+    private router: Router,
+    private matBottomSheet: MatBottomSheet,
+    private http: HttpClient
+  ) { }
 
   ngOnInit(): void {
     this.loadQuestions();
@@ -46,7 +61,6 @@ export class ExercisesComponent implements OnInit {
   }
 
   nextPage() {
-    // Avançar para a próxima página de perguntas
     this.currentPageIndex++;
     this.answersSubmitted = false;
   }
@@ -57,35 +71,43 @@ export class ExercisesComponent implements OnInit {
   }
 
   loadQuestions() {
-    // Lógica para obter as perguntas do serviço (exemplo: Firestore)
-    // Substitua pelo seu código de obtenção das perguntas
-    this.questions = [
-      {
-        text: 'Qual é a capital do Brasil?',
-        options: ['Rio de Janeiro', 'Brasília', 'São Paulo', 'Salvador'],
-        correctAnswer: 'Brasília',
-        selectedAnswer: null
+    this.callGetQuestions();
+  }
+
+  callGetQuestions(): void {
+    this.loading = true; //TO-DO: VERIFICAR SE VAI PRECISAR DE LOADER
+    const apiUrl = `${customSettings.apiUrl}/exercises`;
+
+    this.http.get<Question[]>(apiUrl)
+      .subscribe(
+        (response) => {
+          this.loading = false;
+          this.questions = response;
+        },
+        (error) => {
+          this.loading = false;
+          const messageError = error && error.error && error.error.message || "Ocorreu um erro, por favor tente novamente!";
+          this.openModalInfo(
+            this.imageError,
+            "Voltar",
+            "Erro",
+            messageError
+          );
+        }
+      );
+  }
+
+  openModalInfo(image: string, buttonText: string, title: string, text: string) {
+    this.matBottomSheet.open(ModalInfoComponent, {
+      data: {
+        image: image,
+        buttonText: buttonText,
+        title: title,
+        text: text
       },
-      {
-        text: 'Qual é a cor do céu em um dia ensolarado?',
-        options: ['Azul', 'Vermelho', 'Verde', 'Amarelo'],
-        correctAnswer: 'Azul',
-        selectedAnswer: null
-      },
-      {
-        text: 'Qual é o maior rio do mundo?',
-        options: ['Nilo', 'Amazonas', 'Mississippi', 'Yangtzé'],
-        correctAnswer: 'Amazonas',
-        selectedAnswer: null
-      },
-      {
-        text: 'Qual é a moeda oficial do Japão?',
-        options: ['Iene', 'Dólar', 'Euro', 'Real'],
-        correctAnswer: 'Iene',
-        selectedAnswer: null
-      },
-      // Adicione mais perguntas aqui...
-    ];
+      panelClass: 'container-modal'
+    })
+      .afterDismissed()
   }
 
   loadTotalScore() {
