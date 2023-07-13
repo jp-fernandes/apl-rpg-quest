@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
+import Images from 'src/app/modules/shared/enums/images.enum';
 import { IUserData } from 'src/app/modules/shared/models/userData';
 import { customSettings } from 'src/assets/config/customSettings';
 import { getEmptyFields, getUserFromLocalStorage, handleMessage } from 'src/assets/config/utils';
@@ -24,8 +25,8 @@ export class ProfileComponent implements OnInit {
     state: '',
     createdDate: ''
   };
-  imageError: string = "/assets/images/modal/modal-error.svg"
-  imageSuccess: string = "/assets/images/modal/modal-success.svg"
+  imageError: string = Images.ERROR;
+  imageSuccess: string = Images.SUCCESS;
   editMode: boolean = false;
   loading: boolean = false;
 

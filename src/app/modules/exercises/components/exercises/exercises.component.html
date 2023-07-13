@@ -1,15 +1,26 @@
-<div>
-    <h1>Componente Novo</h1>
-    <p>{{ question }}</p>
-    <ul>
-        <li *ngFor="let option of options">
-            <!-- <input type="radio" name="resposta" [(ngModel)]="respostaSelecionada" [value]="option"> -->
-            <input type="radio" name="resposta">
-            {{ option }}
-        </li>
-    </ul>
-    <button (click)="verificarResposta()">Verificar</button>
-    <p *ngIf="respostaCorreta !== null">
-        Sua resposta está {{ respostaCorreta ? 'correta!' : 'incorreta!' }}
-    </p>
+<div class="question-container">
+  <h2 class="question-title">Perguntas</h2>
+  <div *ngFor="let question of currentQuestions; let i = index">
+    <div class="question">
+      <p class="question-text">{{ question.text }}</p>
+      <div class="options">
+        <label *ngFor="let option of question.options" class="option-label">
+          <input
+            type="radio"
+            [name]="question.text"
+            [value]="option"
+            [(ngModel)]="question.selectedAnswer"
+            [disabled]="answersSubmitted"
+          />
+          <span class="option-text">{{ option }}</span>
+        </label>
+      </div>
+      <div *ngIf="answersSubmitted" class="question-feedback" [ngClass]="isCorrect(question) ? 'question-feedback-correct' : 'question-feedback-incorrect'">
+        {{ getQuestionFeedback(question) }}
+      </div>
+    </div>
+  </div>
+
+  <button *ngIf="!answersSubmitted" class="action-button" (click)="submitAnswers()">Enviar</button>
+  <button *ngIf="answersSubmitted && !isLastPage()" class="action-button" (click)="nextPage()">Avançar</button>
 </div>

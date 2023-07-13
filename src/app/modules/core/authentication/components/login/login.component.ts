@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { customSettings } from 'src/assets/config/customSettings';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
+import Images from 'src/app/modules/shared/enums/images.enum';
 
 interface ProfileExistenceResponse {
   message: string;
@@ -24,7 +25,7 @@ export class LoginComponent {
     private http: HttpClient
   ) { }
 
-  imageError: string = "/assets/images/modal/modal-error.svg";
+  imageError: string = Images.ERROR;;
   titleError: string = ""
   loading: boolean = false;
 

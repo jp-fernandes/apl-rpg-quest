@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
+import Images from 'src/app/modules/shared/enums/images.enum';
 
 @Component({
   selector: 'rpg-forget-password',
@@ -16,8 +17,8 @@ export class ForgetPasswordComponent {
     private matBottomSheet: MatBottomSheet
   ) { }
 
-  imageError: string = "/assets/images/modal/modal-error.svg"
-  imageSuccess: string = "/assets/images/modal/modal-success.svg"
+  imageError: string = Images.ERROR;
+  imageSuccess: string = Images.SUCCESS;
   flagLogin: boolean = false;
 
   resetPassword(event: Event, email: string): void {

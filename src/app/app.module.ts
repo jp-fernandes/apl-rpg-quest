@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './modules/shared/shared.module';
 import { HomeModule } from './modules/home/home.module';
 import { AuthModule } from './modules/core/authentication/auth.module';
+import { ExercisesModule } from './modules/exercises/exercises.module';
 
 registerLocaleData(localePt);
 
@@ -33,6 +34,7 @@ registerLocaleData(localePt);
     BrowserAnimationsModule,
     SharedModule,
     HomeModule,
+    ExercisesModule,
     AuthModule
   ],
   providers: [

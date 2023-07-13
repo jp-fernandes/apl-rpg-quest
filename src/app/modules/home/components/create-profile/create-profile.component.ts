@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { customSettings } from 'src/assets/config/customSettings';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
+import Images from 'src/app/modules/shared/enums/images.enum';
 
 @Component({
   selector: 'rpg-create-profile',
@@ -20,8 +21,8 @@ export class CreateProfileComponent implements OnInit {
     private matBottomSheet: MatBottomSheet
   ) { }
 
-  imageError: string = "/assets/images/modal/modal-error.svg"
-  imageSuccess: string = "/assets/images/modal/modal-success.svg"
+  imageError: string = Images.ERROR;
+  imageSuccess: string = Images.SUCCESS;
   titleError: string = ""
   flagLogin: boolean = false;
   flagHome: boolean = false;

@@ -14,7 +14,7 @@ export class SubjectService {
             'Gramática: Estudaremos as regras e estruturas da língua portuguesa, incluindo os tempos verbais, a concordância nominal e verbal, e a pontuação.',
             'Ortografia: Exploraremos as regras ortográficas, incluindo o uso correto das letras, acentuação e pontuação.',
             'Interpretação de Textos: Desenvolveremos habilidades de leitura crítica, compreensão e análise de diversos tipos de textos.',
-            'Redação: Aprenderemos técnicas e estratégias para produção de textos coesos, coerentes e bem estruturados.'
+            'Figuras de Linguagem: Estudo das diversas figuras de linguagem, como metáfora, metonímia, hipérbole, personificação, entre outras, e sua aplicação em textos.'
           ]
         };
       case 'mathematics':
