@@ -53,7 +53,14 @@ export class StudyComponent implements OnInit {
       .afterDismissed()
       .subscribe(x => {
         if (x === "OK") {
-          this.router.navigate(['/subject-overview'], { state: { chosenOption: this.chosenOption } });
+
+          const inProgress = {
+            chosenOption: this.chosenOption,
+            value: true
+          };
+
+          localStorage.setItem('inProgress', JSON.stringify(inProgress));
+          this.router.navigate(['/subject-overview']);
         }
       })
   }

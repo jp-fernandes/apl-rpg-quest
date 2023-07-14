@@ -51,6 +51,7 @@ export class ExercisesComponent implements OnInit {
       });
       this.totalScore += pageScore;
       localStorage.setItem(this.localStorageKey, String(this.totalScore));
+      localStorage.setItem('partialExercises', 'true');
 
       this.answersSubmitted = true;
 
@@ -75,7 +76,10 @@ export class ExercisesComponent implements OnInit {
   }
 
   callGetQuestions(): void {
-    this.loading = true; //TO-DO: VERIFICAR SE VAI PRECISAR DE LOADER
+    this.loading = true;
+    //TO-DO:
+    // 1 - VERIFICAR SE VAI PRECISAR DE LOADER - precisa sim. e colocar a tela branca
+    // 2 - Vai ganhar novo parametro para subject
     const apiUrl = `${customSettings.apiUrl}/exercises`;
 
     this.http.get<Question[]>(apiUrl)

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 import { IUserData } from 'src/app/modules/shared/models/userData';
 import { customSettings } from 'src/assets/config/customSettings';
-import { getItemFromLocalStorage, getUserFromLocalStorage } from 'src/assets/config/utils';
+import { getItemFromLocalStorage, getTranslatedSubjectName, getUserFromLocalStorage } from 'src/assets/config/utils';
 import Images from 'src/app/modules/shared/enums/images.enum';
 
 @Component({
@@ -46,8 +46,16 @@ export class HomeComponent implements OnInit {
 
   studyPaths(): void {
     // To-do
-    // 1 - Ja navega falta criar tela
-    this.router.navigate(['/study']);
+    // 1 - Se tiver escolhido uma materia em andamento so vai deixar estudar outra se ja tiver terminado a materia em andamento - salvar no local storage
+
+    const inProgress = getItemFromLocalStorage('inProgress');
+
+    if (inProgress && inProgress.value) {
+      this.messageErrorStudyPaths(inProgress.chosenOption);
+    } else {
+      this.router.navigate(['/study']);
+    }
+
   }
 
   takeExams(): void {
@@ -93,10 +101,11 @@ export class HomeComponent implements OnInit {
 
   checkSubjectCompletion(): void {
     const completed = getItemFromLocalStorage('completed');
+    const partialExercises = getItemFromLocalStorage('partialExercises');
 
     if (completed == null) {
       this.callCheckSubjectCompletion();
-    } else if (completed) {
+    } else if (partialExercises || completed) {
       this.router.navigate(['/exams']);
     } else {
       this.messageErrorCheck();
@@ -138,6 +147,18 @@ export class HomeComponent implements OnInit {
       "",
       "OK",
       "<strong>Erro</strong>",
+      messageError
+    );
+  }
+
+  messageErrorStudyPaths(option: any) {
+    let optionTranslated = getTranslatedSubjectName(option);
+
+    const messageError = `Você precisa concluir a prova da matéria em andamento: <strong>${optionTranslated}</strong> antes de iniciar uma nova.`
+    this.openModalInfo(
+      "",
+      "OK",
+      "<strong>Ops!</strong>",
       messageError
     );
   }

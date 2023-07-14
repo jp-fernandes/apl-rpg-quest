@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { SubjectService } from '../../services/subject.service';
+import { Router } from '@angular/router';
+import { getItemFromLocalStorage } from 'src/assets/config/utils';
 
 @Component({
   selector: 'rpg-subject-overview',
@@ -11,13 +13,17 @@ export class SubjectOverviewComponent implements OnInit {
   title!: string;
   overview!: string;
   subTopics: string[] = [];
+  currentPage: number = 1;
 
   constructor(
-    private subjectService: SubjectService
+    private subjectService: SubjectService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.chosenOption = window.history.state && window.history.state.chosenOption;
+    //to-do - 1 - Verificar se chegou na ultima pagina pq dai eu direciono para os execicios
+    const inProgress = getItemFromLocalStorage('inProgress');
+    this.chosenOption = inProgress.chosenOption;
     console.log("opcao recebida ", this.chosenOption)
 
     if (this.chosenOption) {
@@ -32,9 +38,13 @@ export class SubjectOverviewComponent implements OnInit {
       // Redirecionar para a página inicial se a opção escolhida não for válida
       // ... faça a implementação adequada para redirecionar para a página inicial
     }
-
-    //To-do
-    // 1 - Validar essa PROP this.chosenOption pq caso atualizem a pagina direcionar para a home.
   }
 
+  nextPage() {
+    this.currentPage++;
+  }
+
+  previousPage() {
+    this.currentPage--;
+  }
 }

@@ -1,11 +1,12 @@
-.subject-overview {
+.subject-overview, .subject-overview-subTopics {
   background-image: url("/assets/images/common/background-base.png");
   background-size: cover;
   height: 100vh;
   background-position: center;
   text-align: justify;
-  padding: 10px;
+  padding: 0 32px 0 32px;
   font-size: 25px;
+  overflow: hidden !important;
 }
 
 .title {
@@ -24,10 +25,11 @@
   font-weight: bold;
   margin-top: 30px;
   margin-bottom: 30px;
+  color: darkgreen;
 }
 
 .content {
-  margin-top: 1rem;
+  margin-top: 30px;
 }
 
 .text-overview {
@@ -49,10 +51,37 @@
   line-height: 1.3;
 }
 
+.buttons-section {
+  display: flex;
+  justify-content: space-around;
+}
+
+.actions-button-pages {
+  display: block;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  background-color: indigo;
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 40px;
+}
+
+.actions-button-pages:hover {
+  background-color: #45a049;
+}
+
 @media (max-width: 768px) {
 
   .subject-overview {
-    padding: 10px;
+    padding: 0 16px 0 16px;
+    font-size: 18px;
+  }
+
+  .subject-overview-subTopics {
+    padding: 0px 32px 0 8px;
     font-size: 18px;
   }
 

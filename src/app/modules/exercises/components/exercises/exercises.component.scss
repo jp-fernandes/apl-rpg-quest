@@ -3,15 +3,16 @@
   background-size: cover;
   height: 100vh;
   background-position: center;
-  padding: 32px;
+  padding: 0 16px 0 16px;
   font-size: 25px;
+  overflow: hidden !important;
 }
 
 .question-title {
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   margin-top: 30px;
 }
 
@@ -39,12 +40,12 @@
 }
 
 .question-feedback-correct {
-  margin-top: 20px;
+  margin-top: 10px;
   color: darkblue;
 }
 
 .question-feedback-incorrect {
-  margin-top: 20px;
+  margin-top: 10px;
   color: red;
 }
 
@@ -66,6 +67,10 @@
 
 @media (max-width: 768px) {
 
+  .question {
+    font-size: 19px;
+  }
+
   .question-text {
     line-height: 1.1;
     text-align: justify;
@@ -76,7 +81,7 @@
   }
 
   .option-text {
-    font-size: 24px;
+    font-size: 18x;
   }
 
 }

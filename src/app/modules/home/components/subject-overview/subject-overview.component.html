@@ -1,4 +1,4 @@
-<div class="subject-overview">
+<div class="subject-overview" *ngIf="currentPage === 1">
   <h2 class="title">Introdução</h2>
   <h2 class="subject">{{ title }}</h2>
 
@@ -7,10 +7,22 @@
       {{ overview }}
     </p>
 
-    <h3 class="sub-title">Assuntos que abordaremos:</h3>
+    <button class="actions-button-pages" (click)="nextPage()">Avançar</button>
+  </div>
+</div>
 
+<div class="subject-overview-subTopics" *ngIf="currentPage === 2">
+  <h2 class="title">Assuntos</h2>
+
+  <div class="content">
     <ul>
       <li class="sub-topics" *ngFor="let topic of subTopics">{{ topic }}</li>
     </ul>
+
+    <div class="buttons-section">
+      <button class="actions-button-pages" (click)="previousPage()">Voltar</button>
+      <button class="actions-button-pages" (click)="nextPage()">Avançar</button>
+    </div>
+
   </div>
 </div>
