@@ -1,13 +1,17 @@
 * Pegar icone de trofeu e colocar ao chegar alguma conquista - SVG
+* vai usar internacionalizacao ?
 * Validar campos em geral, testar todos, tipos de dados diferentes - Os required NAO estao funcionando
-* verificar se os todos os selector dos components estao com 'rpg' ou 'app'
 * fazer um interceptador generico para logar rota e demais coisas no banco do Firebase - ver o que preciso LOGAR exemplo quantos users tem no APP
 * Fazer validacao de retomada caso o usuario saida da pagina e volte, retomar progresso atual.
 * cuidado ao usar o profile como base pois os dois botoes tem tamanhos fixos
 * ARRUMAR REGRAS DO JOGO - css ta zoado
-
-
-* - Envie sugestao - bug - elogio - critica - para eu poder melhar -------------- IMPORTANTE CRIAR ESSE ENDPOINT
-1 - Tentar coletar infos: aparelho, nome da pessoa, etc..
+* verificar se atualizei a PROP do LOCALSTORAGE -> "inProgress" para false quando ele terminar de realizar a prova
+* remover console.log de toda o app
+* cache para desempenho atual - primeiro ir no local storage se nao tiver faz req e depois que realizar alguma atividade zera o local storage
 
 OBS - Ja fiz a validacao antes da prova, preciso conferir se ao realizar as ADOS setei true no localStorage
+
+fazer uma busca pela materia na tabela exercices
+
+nao sei se será possivel, mas ver a possibilidade de continuar a retomada do exercicio de onde parou
+

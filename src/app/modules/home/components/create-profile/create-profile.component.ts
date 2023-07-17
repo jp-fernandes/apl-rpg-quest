@@ -29,7 +29,6 @@ export class CreateProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.email = window.history.state && window.history.state.email;
-    console.log("email recebido ", this.email)
   }
 
   createProfile(

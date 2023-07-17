@@ -6,5 +6,5 @@ export interface IUserData {
   gender: string,
   city: string,
   state: string,
-  createdDate: string
+  createdDate: any
 }

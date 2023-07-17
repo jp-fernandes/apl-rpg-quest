@@ -15,6 +15,12 @@
   margin-bottom: 50px;
 }
 
+.logo-image {
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+}
+
 .feedback-form {
   display: flex;
   flex-direction: column;
@@ -127,6 +133,10 @@
 @media (max-width: 768px) {
   .feedback-title {
     font-size: 2rem;
+  }
+
+  .logo-image {
+    width: 120px;
   }
 
   .feedback-button {

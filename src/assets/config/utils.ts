@@ -13,7 +13,6 @@ export function getUserFromLocalStorage(): any {
   if (userString) {
     return JSON.parse(userString);
   } else {
-    console.log("Usuário não encontrado no localStorage");
     return null;
   }
 }

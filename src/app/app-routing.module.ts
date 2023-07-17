@@ -8,7 +8,7 @@ import { HomeComponent } from './modules/home/components/home/home.component';
 import { CreateProfileComponent } from './modules/home/components/create-profile/create-profile.component';
 import { GameRulesComponent } from './modules/home/components/game-rules/game-rules.component';
 import { ProfileComponent } from './modules/home/components/profile/profile.component';
-import { CurrentPerformanceComponent } from './modules/home/components/current-performance/current-performance.component';
+import { CurrentPerformanceComponent } from './modules/current-performance/components/current-performance/current-performance.component';
 import { ExamsComponent } from './modules/home/components/exams/exams.component';
 import { StudyComponent } from './modules/home/components/study/study.component';
 import { SubjectOverviewComponent } from './modules/home/components/subject-overview/subject-overview.component';

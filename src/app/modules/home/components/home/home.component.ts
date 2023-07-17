@@ -41,13 +41,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.user = getUserFromLocalStorage();
     this.name = this.user && this.user.name;
-    console.log('nome :', this.name);
   }
 
   studyPaths(): void {
-    // To-do
-    // 1 - Se tiver escolhido uma materia em andamento so vai deixar estudar outra se ja tiver terminado a materia em andamento - salvar no local storage
-
     const inProgress = getItemFromLocalStorage('inProgress');
 
     if (inProgress && inProgress.value) {
@@ -66,6 +62,7 @@ export class HomeComponent implements OnInit {
     //To-Do
     // 1 - Lógica para reiniciar o jogo do zero
     // 2 - perguntar se realmente quer de ctz reiniciar o jogo
+    // 3 - Zerar todos os local storage sobre - pontuação - materia de estudo - andamento etc. SO NAO DEIXAR ZERAR DADOS DO USER
   }
 
   viewCurrentPerformance(): void {
@@ -75,14 +72,10 @@ export class HomeComponent implements OnInit {
   }
 
   viewProfile(): void {
-    // To-do
-    // 1 - Ja navega falta criar tela
     this.router.navigate(['/profile']);
   }
 
   viewGameRules(): void {
-    // To-do
-    // 1 - Ja navega falta criar tela
     this.router.navigate(['/game-rules']);
   }
 
@@ -187,7 +180,6 @@ export class HomeComponent implements OnInit {
     })
       .afterDismissed()
       .subscribe(x => {
-        console.log(x)
         if (x === "OK" && this.flagLogin) {
           this.flagLogin = false;
           this.router.navigate(['/login']);

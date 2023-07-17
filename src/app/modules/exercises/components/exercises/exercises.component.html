@@ -1,5 +1,5 @@
 <div class="question-container">
-  <h2 class="question-title">Perguntas</h2>
+  <h2 class="question-title">Exercícios </h2>
   <div *ngFor="let question of currentQuestions; let i = index">
     <div class="question">
       <p class="question-text">{{ question.text }}</p>
@@ -20,7 +20,8 @@
       </div>
     </div>
   </div>
+  <div *ngIf="loading" class="loader-complete"></div>
 
-  <button *ngIf="!answersSubmitted" class="action-button" (click)="submitAnswers()">Enviar</button>
-  <button *ngIf="answersSubmitted && !isLastPage()" class="action-button" (click)="nextPage()">Avançar</button>
+  <button *ngIf="!answersSubmitted && !loading" class="action-button" (click)="submitAnswers()">Enviar</button>
+  <button *ngIf="answersSubmitted && !isLastPage() && !loading" class="action-button" (click)="nextPage()">Avançar</button>
 </div>

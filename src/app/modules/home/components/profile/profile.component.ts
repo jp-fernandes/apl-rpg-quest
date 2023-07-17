@@ -72,7 +72,6 @@ export class ProfileComponent implements OnInit {
       );
       return;
     } else {
-      console.log('Dados salvos:', payload);
       this.updateUserProfile(payload);
     }
   }

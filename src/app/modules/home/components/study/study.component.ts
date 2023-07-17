@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
-import { getTranslatedSubjectName } from 'src/assets/config/utils';
+import { getItemFromLocalStorage, getTranslatedSubjectName } from 'src/assets/config/utils';
 
 @Component({
   selector: 'rpg-study',
@@ -19,6 +19,27 @@ export class StudyComponent implements OnInit {
   chosenOption: string = ""
 
   ngOnInit(): void {
+    const inProgress = getItemFromLocalStorage('inProgress');
+    this.chosenOption = inProgress && inProgress.chosenOption;
+
+    if (this.chosenOption) {
+      this.router.navigate(['/subject-overview']);
+      this.messageErrorStudyPaths(this.chosenOption);
+      return;
+    }
+  }
+
+  messageErrorStudyPaths(option: any) {
+    let optionTranslated = getTranslatedSubjectName(option);
+
+    const messageError = `Você precisa concluir a matéria em andamento: <strong>${optionTranslated}</strong>.`
+    this.openModalInfo(
+      "",
+      "OK",
+      "",
+      "<strong>Ops!</strong>",
+      messageError
+    );
   }
 
   goToHome() {

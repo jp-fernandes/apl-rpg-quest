@@ -61,7 +61,7 @@ body {
   animation: spinner 1s linear infinite;
 }
 
-.loader-menu_itens {
+.loader-complete {
   position: absolute;
   top: 0;
   left: 0;
@@ -73,7 +73,7 @@ body {
   align-items: center;
 }
 
-.loader-menu_itens::after {
+.loader-complete::after {
   content: "";
   display: block;
   width: 40px;

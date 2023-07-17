@@ -21,10 +21,8 @@ export class SubjectOverviewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //to-do - 1 - Verificar se chegou na ultima pagina pq dai eu direciono para os execicios
     const inProgress = getItemFromLocalStorage('inProgress');
     this.chosenOption = inProgress.chosenOption;
-    console.log("opcao recebida ", this.chosenOption)
 
     if (this.chosenOption) {
       const subjectData = this.subjectService.getSubjectData(this.chosenOption);
@@ -36,12 +34,15 @@ export class SubjectOverviewComponent implements OnInit {
       }
     } else {
       // Redirecionar para a página inicial se a opção escolhida não for válida
-      // ... faça a implementação adequada para redirecionar para a página inicial
     }
   }
 
   nextPage() {
-    this.currentPage++;
+    if (this.currentPage === 2) {
+      this.router.navigate(['/exercises']);
+    } else {
+      this.currentPage++;
+    }
   }
 
   previousPage() {

@@ -6,6 +6,7 @@ import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info
 import Images from 'src/app/modules/shared/enums/images.enum';
 import { Question } from 'src/app/modules/shared/models/question';
 import { customSettings } from 'src/assets/config/customSettings';
+import { getItemFromLocalStorage } from 'src/assets/config/utils';
 
 @Component({
   selector: 'rpg-exercises',
@@ -41,8 +42,6 @@ export class ExercisesComponent implements OnInit {
 
   submitAnswers() {
     if (!this.answersSubmitted) {
-      console.log(this.currentQuestions);
-      // Lógica para processar as respostas selecionadas
       let pageScore = 0;
       this.currentQuestions.forEach((question) => {
         if (question.selectedAnswer === question.correctAnswer) {
@@ -77,10 +76,9 @@ export class ExercisesComponent implements OnInit {
 
   callGetQuestions(): void {
     this.loading = true;
-    //TO-DO:
-    // 1 - VERIFICAR SE VAI PRECISAR DE LOADER - precisa sim. e colocar a tela branca
-    // 2 - Vai ganhar novo parametro para subject
-    const apiUrl = `${customSettings.apiUrl}/exercises`;
+
+    const inProgress = getItemFromLocalStorage('inProgress');
+    const apiUrl = `${customSettings.apiUrl}/exercises/${encodeURIComponent(inProgress.chosenOption)}`;
 
     this.http.get<Question[]>(apiUrl)
       .subscribe(
@@ -122,6 +120,9 @@ export class ExercisesComponent implements OnInit {
   }
 
   sendAnswersToFirestore() {
+    //To-do
+    // 1 - Chamar serviço para gravar o score do usuario
+    // 2 - Pensar ainda como vai ser a modelagem.
     // Lógica para enviar as respostas para o Firestore
     // Substitua pelo seu código de envio das respostas
     console.log('Enviando respostas para o Firestore...');
