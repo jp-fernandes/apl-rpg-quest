@@ -1,0 +1,43 @@
+<div class="performance-details-container">
+  <h2 class="performance-details-title">
+    <img
+      class="logo-image"
+      src="/assets/images/performance/performance.png"
+      alt="Logo"
+    />
+    Detalhes de Desempenho
+  </h2>
+
+  <h3 class="performance-details-title">{{ objSelectedPerformance?.subject }}</h3>
+
+  <div class="subjects-section">
+    <div class="subject">
+      <button class="subject-button">
+        <i class="fas fa-pencil-alt"></i> Exercícios
+        <div class="progress">{{ objSelectedPerformance?.exercises }}.0</div>
+      </button>
+    </div>
+    <div class="subject">
+      <button class="subject-button">
+        <i class="fas fa-clipboard"></i> Prova
+        <div *ngIf="!examDone" class="progress">Não iniciada</div>
+        <div *ngIf="examDone" class="progress">{{ objSelectedPerformance?.exam }}</div>
+      </button>
+    </div>
+    <div class="subject">
+      <button class="subject-button">
+        <i class="fas fa-file-alt"></i> Nota Final
+        <div class="progress">{{ objSelectedPerformance?.scoreTotal }}.0</div>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!examDone">
+    <p class="select-subject-message">
+      <i class="fas fa-info-circle"></i>Assim que realizar a prova sua nota será
+      atualizada.
+    </p>
+  </div>
+
+  <div class="goBack" (click)="goBack()">Voltar</div>
+</div>

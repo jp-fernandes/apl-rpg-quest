@@ -56,6 +56,8 @@ export class HomeComponent implements OnInit {
 
   takeExams(): void {
     this.checkSubjectCompletion();
+    // to-do
+    // 1 - falar para o usuario de qual materia ele está realizando a prova - PEGAR no localstorage
   }
 
   restartFromZero(): void {
@@ -66,8 +68,6 @@ export class HomeComponent implements OnInit {
   }
 
   viewCurrentPerformance(): void {
-    // To-do
-    // 1 - Ja navega falta criar tela
     this.router.navigate(['/current-performance']);
   }
 

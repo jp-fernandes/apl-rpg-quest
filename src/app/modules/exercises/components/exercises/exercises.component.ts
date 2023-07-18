@@ -4,9 +4,10 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 import Images from 'src/app/modules/shared/enums/images.enum';
-import { Question } from 'src/app/modules/shared/models/question';
+import { IQuestion } from 'src/app/modules/shared/models/question';
+import { IUserData } from 'src/app/modules/shared/models/userData';
 import { customSettings } from 'src/assets/config/customSettings';
-import { getItemFromLocalStorage } from 'src/assets/config/utils';
+import { getItemFromLocalStorage, getUserFromLocalStorage } from 'src/assets/config/utils';
 
 @Component({
   selector: 'rpg-exercises',
@@ -14,14 +15,28 @@ import { getItemFromLocalStorage } from 'src/assets/config/utils';
   styleUrls: ['./exercises.component.scss']
 })
 export class ExercisesComponent implements OnInit {
+  user: IUserData = {
+    email: '',
+    name: '',
+    surname: '',
+    age: 0,
+    gender: '',
+    city: '',
+    state: '',
+    createdDate: ''
+  };
   answersSubmitted = false;
   currentPageIndex = 0;
   questionsPerPage = 2;
   localStorageKey = 'userScore';
-  questions: Question[] = [];
+  questions: IQuestion[] = [];
   totalScore = 0;
   loading: boolean = false;
-  imageError: string = Images.ERROR;;
+  imageError: string = Images.ERROR;
+  imageSuccess: string = Images.SUCCESS;
+  email: string | undefined;
+  subjectSelected: string = '';
+  flagHome: boolean = false;
 
   constructor(
     private router: Router,
@@ -30,6 +45,10 @@ export class ExercisesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const inProgress = getItemFromLocalStorage('inProgress');
+    this.subjectSelected = inProgress.chosenOption;
+    this.user = getUserFromLocalStorage();
+    this.email = this.user.email;
     this.loadQuestions();
     this.loadTotalScore();
   }
@@ -45,7 +64,7 @@ export class ExercisesComponent implements OnInit {
       let pageScore = 0;
       this.currentQuestions.forEach((question) => {
         if (question.selectedAnswer === question.correctAnswer) {
-          pageScore += 0.5;
+          pageScore += 1;
         }
       });
       this.totalScore += pageScore;
@@ -77,16 +96,18 @@ export class ExercisesComponent implements OnInit {
   callGetQuestions(): void {
     this.loading = true;
 
-    const inProgress = getItemFromLocalStorage('inProgress');
-    const apiUrl = `${customSettings.apiUrl}/exercises/${encodeURIComponent(inProgress.chosenOption)}`;
+    const apiUrl = `${customSettings.apiUrl}/exercises/${encodeURIComponent(this.subjectSelected)}`;
 
-    this.http.get<Question[]>(apiUrl)
+    this.http.get<IQuestion[]>(apiUrl)
       .subscribe(
         (response) => {
           this.loading = false;
           this.questions = response;
         },
         (error) => {
+          // to-do
+          // 1 - se dê erro zerar o local storage da materia em andamento para ele poder entrar aqui de novo
+          // 2 - avaliar no endpoint de respostas tbm. zerar os dados dele para o score ficar zeradinho
           this.loading = false;
           const messageError = error && error.error && error.error.message || "Ocorreu um erro, por favor tente novamente!";
           this.openModalInfo(
@@ -110,6 +131,11 @@ export class ExercisesComponent implements OnInit {
       panelClass: 'container-modal'
     })
       .afterDismissed()
+      .subscribe(x => {
+        if (this.flagHome) {
+          this.router.navigate(['/home']);
+        }
+      })
   }
 
   loadTotalScore() {
@@ -120,12 +146,64 @@ export class ExercisesComponent implements OnInit {
   }
 
   sendAnswersToFirestore() {
-    //To-do
-    // 1 - Chamar serviço para gravar o score do usuario
-    // 2 - Pensar ainda como vai ser a modelagem.
-    // Lógica para enviar as respostas para o Firestore
-    // Substitua pelo seu código de envio das respostas
-    console.log('Enviando respostas para o Firestore...');
+    this.loadTotalScore();
+
+    const payload = {
+      email: this.email,
+      subject: this.subjectSelected,
+      progress: 50,
+      exercises: this.totalScore
+    };
+
+    this.callSavePerformance(payload);
+  }
+
+  callSavePerformance(payload: any): void {
+    const apiUrl = `${customSettings.apiUrl}/performance`;
+    this.loading = true;
+    this.flagHome = true;
+
+    this.http.post(apiUrl, payload).subscribe(
+      (response) => {
+        this.loading = false;
+        const titleSucess = `<strong>Sua nota foi ${this.totalScore}</strong>`;
+        const messageSucess = this.getScoreMessage(this.totalScore);
+
+        this.openModalInfo(
+          this.imageSuccess,
+          "Ir para home",
+          titleSucess,
+          messageSucess
+        );
+      },
+      (error) => {
+        this.loading = false;
+        const messageError = error && error.error && error.error.message || "Ocorreu um erro, por favor tente novamente!";
+        this.openModalInfo(
+          this.imageError,
+          "Ir para home",
+          "Erro",
+          messageError
+        );
+      }
+    );
+  }
+
+  getScoreMessage(totalScore: number): string {
+    switch (totalScore) {
+      case 4:
+        return `Parabéns, <strong>${this.user.name}</strong>! Excelente desempenho, você tirou a nota máxima!`;
+        case 3:
+          return `Muito bem, <strong>${this.user.name}</strong>! Você fez um bom trabalho e conseguiu uma ótima nota!`;
+      case 2:
+        return "Você está no caminho certo, continue praticando para melhorar sua nota!";
+      case 1:
+        return "Não desanime, você pode melhorar seu desempenho com mais dedicação!";
+      case 0:
+        return "Não se preocupe, é só o começo! Continue se esforçando para alcançar melhores resultados!";
+      default:
+        return "Parabéns pelo seu desempenho!";
+    }
   }
 
   getQuestionFeedback(question: any): string {

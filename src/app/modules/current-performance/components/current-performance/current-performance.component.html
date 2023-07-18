@@ -4,39 +4,21 @@
   </h2>
 
   <div class="subjects-section">
-    <div class="subject">
-      <button class="subject-button" (click)="confirmSubjectSelection('mathematics')">
-        <i class="fas fa-calculator"></i> Matemática
-        <div class="progress">80%</div>
-      </button>
-    </div>
-    <div class="subject">
-      <button class="subject-button" (click)="confirmSubjectSelection('portuguese')">
-        <i class="fas fa-book"></i> Língua Portuguesa
-        <div class="progress">65%</div>
-      </button>
-    </div>
-    <div class="subject">
-      <button class="subject-button" (click)="confirmSubjectSelection('sciences')">
-        <i class="fas fa-flask"></i> Ciências Naturais
-        <div class="progress">90%</div>
-      </button>
-    </div>
-    <div class="subject">
-      <button class="subject-button" (click)="confirmSubjectSelection('history')">
-        <i class="fas fa-landmark"></i> História
-        <div class="progress">50%</div>
-      </button>
-    </div>
-    <div class="subject">
-      <button class="subject-button" (click)="confirmSubjectSelection('geography')">
-        <i class="fas fa-globe"></i> Geografia
-        <div class="progress">75%</div>
+    <div class="subject" *ngFor="let item of performanceData.performance">
+      <button class="subject-button" (click)="confirmSubjectSelection(item)">
+        <i class="fas" [ngClass]="getItemIconClass(item.subject)"></i> {{ translatedSubjectName(item.subject) }}
+        <div class="progress">{{ item.progress }}%</div>
       </button>
     </div>
   </div>
 
-  <p class="select-subject-message"><i class="fas fa-info-circle"></i>Selecione a matéria para ver os detalhes.</p>
+  <div *ngIf="loading" class="loader-complete"></div>
+
+  <p *ngIf="performanceData.performance.length > 0" class="select-subject-message"><i class="fas fa-info-circle"></i>Selecione a matéria para ver os detalhes.</p>
+
+  <div class="no-data-message" *ngIf="performanceData.performance.length === 0">
+    Você não registrou nenhuma atividade ou prova até o momento.
+  </div>
 
   <div class="home-access" (click)="goToHome()">Para voltar à home, <span class="here">clique aqui</span></div>
 </div>

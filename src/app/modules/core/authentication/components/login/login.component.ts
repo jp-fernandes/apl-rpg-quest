@@ -6,8 +6,10 @@ import { customSettings } from 'src/assets/config/customSettings';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 import Images from 'src/app/modules/shared/enums/images.enum';
+import { formatDate } from 'src/assets/config/utils';
 
 interface ProfileExistenceResponse {
+  createdDate: any;
   message: string;
   code: number;
 }
@@ -63,6 +65,7 @@ export class LoginComponent {
           if (response && response.code == 404) {
             this.router.navigate(['/create-profile'], { state: { email: email } });
           } else {
+            response.createdDate = formatDate(response.createdDate);
             localStorage.setItem('user', JSON.stringify(response));
             this.router.navigate(['/home']);
           }

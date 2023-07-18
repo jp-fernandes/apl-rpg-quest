@@ -8,10 +8,25 @@
 * verificar se atualizei a PROP do LOCALSTORAGE -> "inProgress" para false quando ele terminar de realizar a prova
 * remover console.log de toda o app
 * cache para desempenho atual - primeiro ir no local storage se nao tiver faz req e depois que realizar alguma atividade zera o local storage
+* QUANDO O USUARIO REALIZAR A PROVA setar que ele fez a prova -> 'examDone' setar como true - ENVIAR NO Payload JUNTO
+* QUANDO O USUARIO ALGUMA ATUALIZACAO NOVA ATIVIDADE OU ALTERACAO NA PROP 'performanceData' ZERAR DO LOCAL STORAGE
 
-OBS - Ja fiz a validacao antes da prova, preciso conferir se ao realizar as ADOS setei true no localStorage
-
-fazer uma busca pela materia na tabela exercices
+fazer uma busca pela matéria na tabela exercices
 
 nao sei se será possivel, mas ver a possibilidade de continuar a retomada do exercicio de onde parou
 
+
+--------------------------------------------
+
+CENARIOS DE TESTES
+
+MENU
+1.0 - Realizar estudo
+1.1 - realizar provas antes do estudo
+
+2.0 - Fazer exercicios
+2.1 - voltar para home tentar iniciar outra materia
+
+3.0 testar varias funcoes com diversas materias - exemplo aconteceu tudo bonito com 1 e com duas ?
+
+* recomeçar do zero conferir se tudo foi zerado corretamente - MENOS dados de USER

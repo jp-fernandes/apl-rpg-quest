@@ -30,6 +30,16 @@ export function getEmptyFields(payload: any): string[] {
   return emptyFields;
 }
 
+export function formatDate(createdDate: any): string {
+  const seconds = createdDate._seconds;
+  const date = new Date(seconds * 1000);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}
+
 export function getTranslatedSubjectName(option: string) {
 
   if (option == "mathematics") {
