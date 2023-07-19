@@ -212,11 +212,14 @@ export class ExamComponent implements OnInit {
       subject: this.subjectSelected,
       progress: 100,
       exercises: this.totalScoreExercises,
-      exam: this.totalScoreExam
+      exam: this.totalScoreExam,
+      examDone: true
     };
 
     //to-do
     // 1 - zerar do local storage a performance
+    // 2 - verificar o que precisa zerar mais exemplo "inProgress" tbm precisa pq dai ele pode realizar nova materia
+    // 3 - durantes os testes vou deixar o "inProgress" comentado
     this.callSavePerformance(payload);
     this.callSaveStatus();
   }
@@ -229,6 +232,10 @@ export class ExamComponent implements OnInit {
     this.http.post(apiUrl, payload).subscribe(
       (response) => {
         this.loading = false;
+        localStorage.removeItem('performanceData');
+        localStorage.removeItem('inProgress');
+        localStorage.removeItem('partialExercises');
+
         const titleSucess = `<strong>Sua nota foi: ${this.totalScoreExam}</strong>`;
         const messageSucess = this.getScoreMessage(this.totalScoreExam);
 

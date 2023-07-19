@@ -164,6 +164,9 @@ export class ExercisesComponent implements OnInit {
       exercises: this.totalScore
     };
 
+    //to-do
+    // 1 - tentar da mais uma chance a ele caso ele tire zero. falar para refazer a prova.
+
     this.callSavePerformance(payload);
     this.callSaveStatus();
   }
