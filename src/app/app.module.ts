@@ -15,6 +15,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { HomeModule } from './modules/home/home.module';
 import { AuthModule } from './modules/core/authentication/auth.module';
 import { ExercisesModule } from './modules/exercises/exercises.module';
+import { ExamsModule } from './modules/exams/exams.module';
 
 registerLocaleData(localePt);
 
@@ -35,6 +36,7 @@ registerLocaleData(localePt);
     SharedModule,
     HomeModule,
     ExercisesModule,
+    ExamsModule,
     AuthModule
   ],
   providers: [

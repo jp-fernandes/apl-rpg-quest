@@ -4,17 +4,18 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 import Images from 'src/app/modules/shared/enums/images.enum';
+import { IPerformanceData } from 'src/app/modules/shared/models/performanceData';
 import { IQuestion } from 'src/app/modules/shared/models/question';
 import { IUserData } from 'src/app/modules/shared/models/userData';
 import { customSettings } from 'src/assets/config/customSettings';
 import { getItemFromLocalStorage, getUserFromLocalStorage } from 'src/assets/config/utils';
 
 @Component({
-  selector: 'rpg-exercises',
-  templateUrl: './exercises.component.html',
-  styleUrls: ['./exercises.component.scss']
+  selector: 'rpg-exam',
+  templateUrl: './exam.component.html',
+  styleUrls: ['./exam.component.scss']
 })
-export class ExercisesComponent implements OnInit {
+export class ExamComponent implements OnInit {
   user: IUserData = {
     email: '',
     name: '',
@@ -29,16 +30,20 @@ export class ExercisesComponent implements OnInit {
   allQuestionsAnswered = false;
   currentPageIndex = 0;
   questionsPerPage = 2;
-  localStorageKey = 'userScore';
+  localStorageKey = 'userScoreExam';
   questions: IQuestion[] = [];
-  totalScore = 0;
+  totalScoreExam = 0;
+  totalScoreExercises = 0;
   loading: boolean = false;
   imageError: string = Images.ERROR;
   imageSuccess: string = Images.SUCCESS;
-  email: string | undefined;
+  email: string = '';
   subjectSelected: string = '';
   flagHome: boolean = false;
   warning: boolean = false;
+  performanceData: IPerformanceData = {
+    performance: []
+  };
 
   constructor(
     private router: Router,
@@ -47,12 +52,57 @@ export class ExercisesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    //to-do
+    // 1 - Tirar todas as regras do exercicio e mudar para regras de provas
     const inProgress = getItemFromLocalStorage('inProgress');
     this.subjectSelected = inProgress.chosenOption;
     this.user = getUserFromLocalStorage();
     this.email = this.user.email;
+    this.loadPerformance();
     this.loadQuestions();
-    this.loadTotalScore();
+    this.loadTotalScoreExam();
+  }
+
+  loadPerformance() {
+    const performanceData = getItemFromLocalStorage('performanceData');
+    if (performanceData) {
+      this.performanceData = performanceData;
+      this.totalScoreExercises = this.getScoreExercisesBySubject(this.subjectSelected, performanceData);
+    } else {
+      this.callGetPerformance();
+    }
+  }
+
+  getScoreExercisesBySubject(subject: string, performanceData: IPerformanceData): number {
+    const performance = performanceData.performance;
+    const subjectPerformance = performance.find((item) => item.subject === subject);
+    return subjectPerformance ? subjectPerformance.exercises : 0;
+  }
+
+  callGetPerformance(): void {
+    const apiUrl = `${customSettings.apiUrl}/performance/${encodeURIComponent(this.email)}`;
+
+    this.http.get<{ message: string, performanceData: IPerformanceData }>(apiUrl)
+      .subscribe(
+        (response) => {
+          if (response.performanceData) {
+            this.performanceData = response.performanceData;
+            this.totalScoreExercises = this.getScoreExercisesBySubject(this.subjectSelected, this.performanceData);
+          } else {
+            this.performanceData = { performance: [] };
+          }
+          localStorage.setItem('performanceData', JSON.stringify(this.performanceData));
+        },
+        (error) => {
+          const messageError = error && error.error && error.error.message || "Ocorreu um erro, por favor tente novamente!";
+          this.openModalInfo(
+            this.imageError,
+            "Voltar",
+            "Erro",
+            messageError
+          );
+        }
+      );
   }
 
   get currentQuestions(): any[] {
@@ -76,14 +126,14 @@ export class ExercisesComponent implements OnInit {
           pageScore += 1;
         }
       });
-      this.totalScore += pageScore;
-      localStorage.setItem(this.localStorageKey, String(this.totalScore));
+      this.totalScoreExam += pageScore;
+      localStorage.setItem(this.localStorageKey, String(this.totalScoreExam));
       localStorage.setItem('partialExercises', 'true');
 
       this.answersSubmitted = true;
 
       if (this.isLastPage()) {
-        this.sendAnswersToFirestore();
+        this.sendAnswersExamToFirestore();
       }
     }
   }
@@ -99,13 +149,13 @@ export class ExercisesComponent implements OnInit {
   }
 
   loadQuestions() {
-    this.callGetQuestions();
+    this.callGetQuestionsExams();
   }
 
-  callGetQuestions(): void {
+  callGetQuestionsExams(): void {
     this.loading = true;
 
-    const apiUrl = `${customSettings.apiUrl}/exercises/${encodeURIComponent(this.subjectSelected)}`;
+    const apiUrl = `${customSettings.apiUrl}/exams/${encodeURIComponent(this.subjectSelected)}`;
 
     this.http.get<IQuestion[]>(apiUrl)
       .subscribe(
@@ -147,23 +197,26 @@ export class ExercisesComponent implements OnInit {
       })
   }
 
-  loadTotalScore() {
+  loadTotalScoreExam() {
     const totalScoreString = localStorage.getItem(this.localStorageKey);
     if (totalScoreString) {
-      this.totalScore = parseFloat(totalScoreString);
+      this.totalScoreExam = parseFloat(totalScoreString);
     }
   }
 
-  sendAnswersToFirestore() {
-    this.loadTotalScore();
+  sendAnswersExamToFirestore() {
+    this.loadTotalScoreExam();
 
     const payload = {
       email: this.email,
       subject: this.subjectSelected,
-      progress: 50,
-      exercises: this.totalScore
+      progress: 100,
+      exercises: this.totalScoreExercises,
+      exam: this.totalScoreExam
     };
 
+    //to-do
+    // 1 - zerar do local storage a performance
     this.callSavePerformance(payload);
     this.callSaveStatus();
   }
@@ -176,8 +229,8 @@ export class ExercisesComponent implements OnInit {
     this.http.post(apiUrl, payload).subscribe(
       (response) => {
         this.loading = false;
-        const titleSucess = `<strong>Sua nota foi: ${this.totalScore}</strong>`;
-        const messageSucess = this.getScoreMessage(this.totalScore);
+        const titleSucess = `<strong>Sua nota foi: ${this.totalScoreExam}</strong>`;
+        const messageSucess = this.getScoreMessage(this.totalScoreExam);
 
         this.openModalInfo(
           this.imageSuccess,
@@ -203,7 +256,7 @@ export class ExercisesComponent implements OnInit {
 
     const payloadStatus = {
       email: this.email,
-      score: this.totalScore,
+      score: this.totalScoreExam,
       subject: this.subjectSelected
     }
 
@@ -228,6 +281,8 @@ export class ExercisesComponent implements OnInit {
     );
   }
 
+  //to-do
+  //1 - mudar mensagens de aprovacao ou reprovacao
   getScoreMessage(totalScore: number): string {
     switch (totalScore) {
       case 4:

@@ -99,7 +99,7 @@ export class HomeComponent implements OnInit {
     if (completed == null) {
       this.callCheckSubjectCompletion();
     } else if (partialExercises || completed) {
-      this.router.navigate(['/exams']);
+      this.router.navigate(['/exam']);
     } else {
       this.messageErrorCheck();
     }
@@ -115,7 +115,7 @@ export class HomeComponent implements OnInit {
           this.loading = false;
           if (response && response.completed) {
             localStorage.setItem('completed', "true");
-            this.router.navigate(['/exams']);
+            this.router.navigate(['/exam']);
           } else {
             localStorage.setItem('completed', "false");
             this.messageErrorCheck();
@@ -135,7 +135,7 @@ export class HomeComponent implements OnInit {
   }
 
   messageErrorCheck() {
-    const messageError = `Você precisa completar pelo menos 1 atividade antes de fazer a prova acesse: <strong>Trilhas para Estudo</strong>.`
+    const messageError = `Você precisa completar pelo menos 1 atividade da matéria em andamento antes de fazer a prova, caso não tenha nenhuma matéria em andamento acesse: <strong>Trilhas para Estudo</strong>.`
     this.openModalInfo(
       "",
       "OK",

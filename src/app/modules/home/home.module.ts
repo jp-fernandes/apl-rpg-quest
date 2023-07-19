@@ -5,7 +5,6 @@ import { CreateProfileComponent } from './components/create-profile/create-profi
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GameRulesComponent } from './components/game-rules/game-rules.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { ExamsComponent } from './components/exams/exams.component';
 import { StudyComponent } from './components/study/study.component';
 import { SharedModule } from '../shared/shared.module';
 import { SubjectOverviewComponent } from './components/subject-overview/subject-overview.component';
@@ -18,7 +17,6 @@ import { CurrentPerformanceModule } from '../current-performance/current-perform
     CreateProfileComponent,
     GameRulesComponent,
     ProfileComponent,
-    ExamsComponent,
     StudyComponent,
     SubjectOverviewComponent,
     FeedbackComponent

@@ -5,6 +5,18 @@ import { getItemFromLocalStorage } from 'src/assets/config/utils';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
+interface SubjectData {
+  title: string;
+  overview: string;
+  subTopics: string[];
+  details: DetailItem[];
+}
+
+interface DetailItem {
+  name: string;
+  description: string;
+  example: string;
+}
 @Component({
   selector: 'rpg-subject-overview',
   templateUrl: './subject-overview.component.html',
@@ -15,6 +27,7 @@ export class SubjectOverviewComponent implements OnInit {
   title!: string;
   overview!: string;
   subTopics: string[] = [];
+  details: any[] = [];
   currentPage: number = 1;
   exercises: boolean = false;
 
@@ -29,12 +42,13 @@ export class SubjectOverviewComponent implements OnInit {
     this.chosenOption = inProgress.chosenOption;
 
     if (this.chosenOption) {
-      const subjectData = this.subjectService.getSubjectData(this.chosenOption);
+      const subjectData = this.subjectService.getSubjectData(this.chosenOption) as SubjectData;
 
       if (subjectData) {
         this.title = subjectData.title;
         this.overview = subjectData.overview;
         this.subTopics = subjectData.subTopics;
+        this.details = subjectData.details || [];
       }
     } else {
       // Redirecionar para a página inicial se a opção escolhida não for válida
@@ -42,7 +56,7 @@ export class SubjectOverviewComponent implements OnInit {
   }
 
   nextPage() {
-    if (this.currentPage === 2) {
+    if (this.currentPage === 6) {
       this.exercises = true;
 
       const titleSucess = `<strong>Vamos para o desafio?</strong>`;

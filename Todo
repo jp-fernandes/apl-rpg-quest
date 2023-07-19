@@ -8,10 +8,10 @@
 * verificar se atualizei a PROP do LOCALSTORAGE -> "inProgress" para false quando ele terminar de realizar a prova
 * remover console.log de toda o app
 * cache para desempenho atual - primeiro ir no local storage se nao tiver faz req e depois que realizar alguma atividade zera o local storage
-* QUANDO O USUARIO REALIZAR A PROVA setar que ele fez a prova -> 'examDone' setar como true - ENVIAR NO Payload JUNTO
+* QUANDO O USUARIO REALIZAR A PROVA setar que ele fez a prova -> 'examDone' setar como true - ENVIAR NO Payload JUNTO - e zerar 'CompletedActivities'
 * QUANDO O USUARIO ALGUMA ATUALIZACAO NOVA ATIVIDADE OU ALTERACAO NA PROP 'performanceData' ZERAR DO LOCAL STORAGE
-
-fazer uma busca pela matéria na tabela exercices
+* CRIAR mais exercicios de outros temas
+* vamos supor que ele terminou a materia e ja tem performance de prova e atividades - se ele escolher a mesma materia concluida avisar que vai substituir a nota atual ele ira recomçear de novo. - UMA OPCAO SERÁ SALVAR A CONLUSAO DA MATERIA NO LOCALSTORAGE
 
 nao sei se será possivel, mas ver a possibilidade de continuar a retomada do exercicio de onde parou
 
@@ -29,4 +29,21 @@ MENU
 
 3.0 testar varias funcoes com diversas materias - exemplo aconteceu tudo bonito com 1 e com duas ?
 
+4.0 - testar com dois usuarios diferentes em browsers diferentes
+
 * recomeçar do zero conferir se tudo foi zerado corretamente - MENOS dados de USER
+
+--------------------------------------------
+
+Criação MINIMA de questões
+
+Exercicios
+
+usar os endpoints para saber o que precisa criar de atividades no postman
+
+Exercicios
+{{baseURLLocal}}/exercises/subjects/count
+
+Provas
+
+{{baseURLLocal}}/exams/subjects/exams-count

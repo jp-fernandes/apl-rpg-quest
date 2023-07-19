@@ -1,5 +1,5 @@
 <div class="question-container">
-  <h2 class="question-title">Exercícios </h2>
+  <h2 class="question-title">Prova Final </h2>
   <div *ngFor="let question of currentQuestions; let i = index">
     <div class="question">
       <p class="question-text">{{ question.text }}</p>
@@ -9,8 +9,8 @@
             type="radio"
             [name]="question.text"
             [value]="option"
-            [(ngModel)]="question.selectedAnswer"
             [disabled]="answersSubmitted"
+            [(ngModel)]="question.selectedAnswer"
           />
           <span class="option-text">{{ option }}</span>
         </label>

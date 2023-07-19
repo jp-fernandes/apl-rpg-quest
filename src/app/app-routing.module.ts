@@ -9,11 +9,11 @@ import { CreateProfileComponent } from './modules/home/components/create-profile
 import { GameRulesComponent } from './modules/home/components/game-rules/game-rules.component';
 import { ProfileComponent } from './modules/home/components/profile/profile.component';
 import { CurrentPerformanceComponent } from './modules/current-performance/components/current-performance/current-performance.component';
-import { ExamsComponent } from './modules/home/components/exams/exams.component';
 import { StudyComponent } from './modules/home/components/study/study.component';
 import { SubjectOverviewComponent } from './modules/home/components/subject-overview/subject-overview.component';
 import { FeedbackComponent } from './modules/home/components/feedback/feedback.component';
 import { ExercisesComponent } from './modules/exercises/components/exercises/exercises.component';
+import { ExamComponent } from './modules/exams/components/exam/exam.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'study', component: StudyComponent },
   { path: 'exercises', component: ExercisesComponent },
   { path: 'subject-overview', component: SubjectOverviewComponent },
-  { path: 'exams', component: ExamsComponent },
+  { path: 'exam', component: ExamComponent },
   { path: 'current-performance', component: CurrentPerformanceComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'feedback', component: FeedbackComponent },
