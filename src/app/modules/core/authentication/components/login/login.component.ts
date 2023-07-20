@@ -39,7 +39,6 @@ export class LoginComponent {
 
     this.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
-        console.log('Usuário logado');
         this.checkProfileExistence(email);
       })
       .catch((error) => {
@@ -65,6 +64,7 @@ export class LoginComponent {
           if (response && response.code == 404) {
             this.router.navigate(['/create-profile'], { state: { email: email } });
           } else {
+            this.clearFullLocalStorage();
             response.createdDate = formatDate(response.createdDate);
             localStorage.setItem('user', JSON.stringify(response));
             this.router.navigate(['/home']);
@@ -81,6 +81,10 @@ export class LoginComponent {
           );
         }
       );
+  }
+
+  clearFullLocalStorage() {
+    localStorage.clear();
   }
 
   goToRegister() {

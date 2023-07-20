@@ -3,7 +3,7 @@ export function getItemFromLocalStorage(key: string): any {
   if (itemString) {
     return JSON.parse(itemString);
   } else {
-    console.log(`Item '${key}' não encontrado no localStorage`);
+    // console.log(`Item '${key}' não encontrado no localStorage`);
     return null;
   }
 }

@@ -1,20 +1,14 @@
 * Pegar icone de trofeu e colocar ao chegar alguma conquista - SVG
 * vai usar internacionalizacao ?
-* Validar campos em geral, testar todos, tipos de dados diferentes - Os required NAO estao funcionando
-* fazer um interceptador generico para logar rota e demais coisas no banco do Firebase - ver o que preciso LOGAR exemplo quantos users tem no APP
-* Fazer validacao de retomada caso o usuario saida da pagina e volte, retomar progresso atual.
-* cuidado ao usar o profile como base pois os dois botoes tem tamanhos fixos
-* ARRUMAR REGRAS DO JOGO - css ta zoado
-* verificar se atualizei a PROP do LOCALSTORAGE -> "inProgress" para false quando ele terminar de realizar a prova
 * remover console.log de toda o app
-* cache para desempenho atual - primeiro ir no local storage se nao tiver faz req e depois que realizar alguma atividade zera o local storage
-* QUANDO O USUARIO REALIZAR A PROVA ---> Zerar 'CompletedActivities'
-* QUANDO O USUARIO FIZER ALGUMA ATUALIZACAO NOVA : ATIVIDADE OU ALTERACAO NA PROP 'performanceData' ZERAR DO LOCAL STORAGE
 * CRIAR mais exercicios de outros temas
+
+Temas principais:
+
+1 - LOGS
+2 - Deploy front
+
 * vamos supor que ele terminou a materia e ja tem performance de prova e atividades - se ele escolher a mesma materia concluida avisar que vai substituir a nota atual ele ira recomçear de novo. - UMA OPCAO SERÁ SALVAR A CONLUSAO DA MATERIA NO LOCALSTORAGE
-
-nao sei se será possivel, mas ver a possibilidade de continuar a retomada do exercicio de onde parou
-
 
 --------------------------------------------
 
@@ -30,6 +24,8 @@ MENU
 3.0 testar varias funcoes com diversas materias - exemplo aconteceu tudo bonito com 1 e com duas ?
 
 4.0 - testar com dois usuarios diferentes em browsers diferentes
+
+5.0 - Validar campos em geral, testar todos, tipos de dados diferentes - Os required NAO estao funcionando
 
 * recomeçar do zero conferir se tudo foi zerado corretamente - MENOS dados de USER
 

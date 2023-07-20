@@ -1,5 +1,5 @@
 export interface ICompletedResponse {
-  completed: boolean;
+  completedForExam: boolean;
   score: string;
   subject: string;
   completionDate: string;

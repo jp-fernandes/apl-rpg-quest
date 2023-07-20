@@ -4,7 +4,7 @@
             <mat-icon class="modal__icon" (click)="closeModal('')">close</mat-icon>
         </div>
         <div *ngIf="data.image" class="modal__image">
-            <img [src]="data.image">
+            <img class="modal__image" [src]="data.image">
         </div>
         <div class="container-modal__title">
             <span class="modal__title" [innerHTML]="data.title"></span>

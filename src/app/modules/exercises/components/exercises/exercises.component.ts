@@ -98,11 +98,7 @@ export class ExercisesComponent implements OnInit {
     return this.currentPageIndex === lastPageIndex;
   }
 
-  loadQuestions() {
-    this.callGetQuestions();
-  }
-
-  callGetQuestions(): void {
+  loadQuestions(): void {
     this.loading = true;
 
     const apiUrl = `${customSettings.apiUrl}/exercises/${encodeURIComponent(this.subjectSelected)}`;
@@ -114,9 +110,7 @@ export class ExercisesComponent implements OnInit {
           this.questions = response;
         },
         (error) => {
-          // to-do
-          // 1 - se dê erro zerar o local storage da materia em andamento para ele poder entrar aqui de novo
-          // 2 - avaliar no endpoint de respostas tbm. zerar os dados dele para o score ficar zeradinho
+          localStorage.removeItem('inProgress');
           this.loading = false;
           const messageError = error && error.error && error.error.message || "Ocorreu um erro, por favor tente novamente!";
           this.openModalInfo(
@@ -164,11 +158,13 @@ export class ExercisesComponent implements OnInit {
       exercises: this.totalScore
     };
 
-    //to-do
-    // 1 - tentar da mais uma chance a ele caso ele tire zero. falar para refazer a prova.
-
     this.callSavePerformance(payload);
     this.callSaveStatus();
+  }
+
+  resetItensLocalStorage() {
+    localStorage.removeItem('performanceData');
+    localStorage.setItem('noData', 'false');
   }
 
   callSavePerformance(payload: any): void {
@@ -179,6 +175,7 @@ export class ExercisesComponent implements OnInit {
     this.http.post(apiUrl, payload).subscribe(
       (response) => {
         this.loading = false;
+        this.resetItensLocalStorage();
         const titleSucess = `<strong>Sua nota foi: ${this.totalScore}</strong>`;
         const messageSucess = this.getScoreMessage(this.totalScore);
 
@@ -206,7 +203,7 @@ export class ExercisesComponent implements OnInit {
 
     const payloadStatus = {
       email: this.email,
-      score: this.totalScore,
+      scoreExercises: this.totalScore,
       subject: this.subjectSelected
     }
 
@@ -217,6 +214,7 @@ export class ExercisesComponent implements OnInit {
     this.http.post(apiUrl, payloadStatus).subscribe(
       (response) => {
         this.loading = false;
+        this.resetItensLocalStorage();
       },
       (error) => {
         this.loading = false;

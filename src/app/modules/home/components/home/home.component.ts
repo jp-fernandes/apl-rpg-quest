@@ -28,9 +28,12 @@ export class HomeComponent implements OnInit {
 
   name = '';
   flagLogin: boolean = false;
+  flagExam: boolean = false;
+  flagReset: boolean = false;
   loading: boolean = false;
-  imageError: string = Images.ERROR;
   email!: string;
+  imageError: string = Images.ERROR;
+  imageSuccess: string = Images.SUCCESS;
 
   constructor(
     private matBottomSheet: MatBottomSheet,
@@ -56,15 +59,24 @@ export class HomeComponent implements OnInit {
 
   takeExams(): void {
     this.checkSubjectCompletion();
-    // to-do
-    // 1 - falar para o usuario de qual materia ele está realizando a prova - PEGAR no localstorage
   }
 
   restartFromZero(): void {
-    //To-Do
-    // 1 - Lógica para reiniciar o jogo do zero
-    // 2 - perguntar se realmente quer de ctz reiniciar o jogo
-    // 3 - Zerar todos os local storage sobre - pontuação - materia de estudo - andamento etc. SO NAO DEIXAR ZERAR DADOS DO USER
+    const noData = getItemFromLocalStorage('noData');
+
+    if (noData) {
+      this.mensageErrorNoData();
+      return;
+    }
+
+    this.flagReset = true;
+    this.openModalInfoChoose(
+      Images.WARNING,
+      "<strong>Tem certeza que deseja reiniciar o jogo?</strong>",
+      "Isso significa que todo o seu progresso será apagado.",
+      "Sim",
+      "Não"
+    );
   }
 
   viewCurrentPerformance(): void {
@@ -86,23 +98,40 @@ export class HomeComponent implements OnInit {
   goToLogin() {
     this.flagLogin = true;
     this.openModalInfoChoose(
+      "",
       "Tem certeza?",
+      "",
       "Sim",
       "Não"
     );
   }
 
   checkSubjectCompletion(): void {
-    const completed = getItemFromLocalStorage('completed');
+    const completedForExam = getItemFromLocalStorage('completedForExam');
     const partialExercises = getItemFromLocalStorage('partialExercises');
 
-    if (completed == null) {
+    if (completedForExam == null) {
       this.callCheckSubjectCompletion();
-    } else if (partialExercises || completed) {
-      this.router.navigate(['/exam']);
+    } else if (partialExercises || completedForExam) {
+      this.goToExam();
     } else {
       this.messageErrorCheck();
     }
+  }
+
+  goToExam() {
+    this.flagExam = true;
+    const inProgress = getItemFromLocalStorage('inProgress');
+    const subject = inProgress && inProgress.chosenOption;
+    let subjectTranslated = getTranslatedSubjectName(subject);
+
+    this.openModalInfoChoose(
+      "",
+      "<strong>Prova Final</strong>",
+      `Prepare-se para fazer a prova da matéria: <strong>${subjectTranslated}</strong>, que você escolheu na sua trilha de estudo. Boa sorte! Deseja iniciar agora?`,
+      "Sim",
+      "Não"
+    );
   }
 
   callCheckSubjectCompletion() {
@@ -113,11 +142,11 @@ export class HomeComponent implements OnInit {
       .subscribe(
         (response) => {
           this.loading = false;
-          if (response && response.completed) {
-            localStorage.setItem('completed', "true");
+          if (response && response.completedForExam) {
+            localStorage.setItem('completedForExam', "true");
             this.router.navigate(['/exam']);
           } else {
-            localStorage.setItem('completed', "false");
+            localStorage.setItem('completedForExam', "false");
             this.messageErrorCheck();
           }
         },
@@ -125,7 +154,7 @@ export class HomeComponent implements OnInit {
           this.loading = false;
           const messageError = error && error.error && error.error.message || "Ocorreu um erro, por favor tente novamente!";
           this.openModalInfo(
-            this.imageError,
+            Images.ERROR,
             "Voltar",
             "Erro",
             messageError
@@ -169,10 +198,12 @@ export class HomeComponent implements OnInit {
       .afterDismissed()
   }
 
-  openModalInfoChoose(title: string, confirmButtonText: string, cancelButtonText: string) {
+  openModalInfoChoose(image: string, title: string, text: string, confirmButtonText: string, cancelButtonText: string) {
     this.matBottomSheet.open(ModalInfoComponent, {
       data: {
+        image: image,
         title: title,
+        text: text,
         buttonText: confirmButtonText,
         buttonText2: cancelButtonText
       },
@@ -181,10 +212,103 @@ export class HomeComponent implements OnInit {
       .afterDismissed()
       .subscribe(x => {
         if (x === "OK" && this.flagLogin) {
+          this.clearFullLocalStorage();
           this.flagLogin = false;
           this.router.navigate(['/login']);
+        } else if (x === "OK" && this.flagReset) {
+          this.flagReset = false;
+          this.callDeleteActivities();
+          this.callDeletePerformance();
+        } else if (x === "OK" && this.flagExam) {
+          this.router.navigate(['/exam']);
         }
       })
+  }
+
+  removeAllItemsLocalStorageExceptUser() {
+    const user = this.user;
+    localStorage.clear();
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  clearFullLocalStorage() {
+    localStorage.clear();
+  }
+
+  callDeleteActivities() {
+    this.loading = true;
+    const apiUrl = `${customSettings.apiUrl}/subjects/activities/${encodeURIComponent(this.user.email)}`;
+
+    this.http.delete<any>(apiUrl)
+      .subscribe(
+        (response) => {
+          this.loading = false;
+          if (response && response.deleted) {
+            this.removeAllItemsLocalStorageExceptUser();
+
+            const titleSucess = `<strong>Seu jogo foi reiniciado com sucesso!</strong>`;
+            const messageSucess = "Agora você pode começar uma nova jornada.";
+
+            this.openModalInfo(
+              this.imageSuccess,
+              "OK",
+              titleSucess,
+              messageSucess
+            );
+
+          } else if (response && response.noData) {
+            localStorage.setItem('noData', 'true');
+            this.mensageErrorNoData();
+          }
+        },
+        (error) => {
+          this.loading = false;
+          const messageError = "Ocorreu um erro, por favor tente novamente!";
+          this.openModalInfo(
+            this.imageError,
+            "Voltar",
+            "Erro",
+            messageError
+          );
+        }
+      );
+  }
+
+  callDeletePerformance() {
+    this.loading = true;
+    const apiUrl = `${customSettings.apiUrl}/performance/performance-data/${encodeURIComponent(this.user.email)}`;
+
+    this.http.delete<any>(apiUrl)
+      .subscribe(
+        (response) => {
+          this.loading = false;
+          if (response && response.deleted) {
+            this.removeAllItemsLocalStorageExceptUser();
+          }
+        },
+        (error) => {
+          this.loading = false;
+          const messageError = "Ocorreu um erro, por favor tente novamente!";
+          this.openModalInfo(
+            this.imageError,
+            "Voltar",
+            "Erro",
+            messageError
+          );
+        }
+      );
+  }
+
+  mensageErrorNoData() {
+    const titleInfo = `<strong>Ops!</strong>`;
+    const messageInfo = "Parece que você ainda não iniciou o jogo, não há nada para reiniciar.";
+
+    this.openModalInfo(
+      this.imageSuccess,
+      "OK",
+      titleInfo,
+      messageInfo
+    );
   }
 
 }

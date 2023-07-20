@@ -100,7 +100,6 @@ export class CurrentPerformanceComponent implements OnInit {
   }
 
   confirmSubjectSelection(performance: any): void {
-    performance.subject = this.translatedSubjectName(performance.subject);
     this.router.navigate(['/performance-details'], { state: { obj: performance } });
   }
 

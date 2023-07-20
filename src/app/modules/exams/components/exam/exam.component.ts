@@ -52,10 +52,8 @@ export class ExamComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //to-do
-    // 1 - Tirar todas as regras do exercicio e mudar para regras de provas
     const inProgress = getItemFromLocalStorage('inProgress');
-    this.subjectSelected = inProgress.chosenOption;
+    this.subjectSelected = inProgress && inProgress.chosenOption;
     this.user = getUserFromLocalStorage();
     this.email = this.user.email;
     this.loadPerformance();
@@ -94,10 +92,11 @@ export class ExamComponent implements OnInit {
           localStorage.setItem('performanceData', JSON.stringify(this.performanceData));
         },
         (error) => {
+          this.flagHome = true;
           const messageError = error && error.error && error.error.message || "Ocorreu um erro, por favor tente novamente!";
           this.openModalInfo(
             this.imageError,
-            "Voltar",
+            "Ir para home",
             "Erro",
             messageError
           );
@@ -148,11 +147,7 @@ export class ExamComponent implements OnInit {
     return this.currentPageIndex === lastPageIndex;
   }
 
-  loadQuestions() {
-    this.callGetQuestionsExams();
-  }
-
-  callGetQuestionsExams(): void {
+  loadQuestions(): void {
     this.loading = true;
 
     const apiUrl = `${customSettings.apiUrl}/exams/${encodeURIComponent(this.subjectSelected)}`;
@@ -164,14 +159,12 @@ export class ExamComponent implements OnInit {
           this.questions = response;
         },
         (error) => {
-          // to-do
-          // 1 - se dê erro zerar o local storage da materia em andamento para ele poder entrar aqui de novo
-          // 2 - avaliar no endpoint de respostas tbm. zerar os dados dele para o score ficar zeradinho
           this.loading = false;
+          this.flagHome = true;
           const messageError = error && error.error && error.error.message || "Ocorreu um erro, por favor tente novamente!";
           this.openModalInfo(
             this.imageError,
-            "Voltar",
+            "Ir para home",
             "Erro",
             messageError
           );
@@ -216,10 +209,6 @@ export class ExamComponent implements OnInit {
       examDone: true
     };
 
-    //to-do
-    // 1 - zerar do local storage a performance
-    // 2 - verificar o que precisa zerar mais exemplo "inProgress" tbm precisa pq dai ele pode realizar nova materia
-    // 3 - durantes os testes vou deixar o "inProgress" comentado
     this.callSavePerformance(payload);
     this.callSaveStatus();
   }
@@ -232,18 +221,17 @@ export class ExamComponent implements OnInit {
     this.http.post(apiUrl, payload).subscribe(
       (response) => {
         this.loading = false;
-        localStorage.removeItem('performanceData');
-        localStorage.removeItem('inProgress');
-        localStorage.removeItem('partialExercises');
+        this.resetLocalStorage();
 
-        const titleSucess = `<strong>Sua nota foi: ${this.totalScoreExam}</strong>`;
-        const messageSucess = this.getScoreMessage(this.totalScoreExam);
+        const titleInfo = `<strong>Sua nota da prova foi: ${this.totalScoreExam}</strong>`;
+        const scoreFinal = this.totalScoreExam + this.totalScoreExercises;
+        const messageInfo = this.getMessageApprovedOrNotApproved(scoreFinal);
 
         this.openModalInfo(
           this.imageSuccess,
           "Ir para home",
-          titleSucess,
-          messageSucess
+          titleInfo,
+          messageInfo
         );
       },
       (error) => {
@@ -259,11 +247,19 @@ export class ExamComponent implements OnInit {
     );
   }
 
+  resetLocalStorage() {
+    const user = this.user;
+    localStorage.clear();
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
   callSaveStatus(): void {
 
     const payloadStatus = {
       email: this.email,
-      score: this.totalScoreExam,
+      scoreExercises: this.totalScoreExercises,
+      scoreExam: this.totalScoreExam,
+      examDone: true,
       subject: this.subjectSelected
     }
 
@@ -274,6 +270,7 @@ export class ExamComponent implements OnInit {
     this.http.post(apiUrl, payloadStatus).subscribe(
       (response) => {
         this.loading = false;
+        this.resetLocalStorage();
       },
       (error) => {
         this.loading = false;
@@ -288,22 +285,16 @@ export class ExamComponent implements OnInit {
     );
   }
 
-  //to-do
-  //1 - mudar mensagens de aprovacao ou reprovacao
-  getScoreMessage(totalScore: number): string {
-    switch (totalScore) {
-      case 4:
-        return `Parabéns, <strong>${this.user.name}</strong>! Excelente desempenho, você tirou a nota máxima!`;
-      case 3:
-        return `Muito bem, <strong>${this.user.name}</strong>! Você fez um bom trabalho e conseguiu uma ótima nota!`;
-      case 2:
-        return "Você está no caminho certo, continue praticando para melhorar sua nota!";
-      case 1:
-        return "Não desanime, você pode melhorar seu desempenho com mais dedicação!";
-      case 0:
-        return "Não se preocupe, é só o começo! Continue se esforçando para alcançar melhores resultados!";
+  getMessageApprovedOrNotApproved(scoreFinal: any): string {
+    switch (true) {
+      case scoreFinal >= 7:
+        return `Parabéns, <strong>${this.user.name}</strong>! Você foi aprovado na matéria.`;
+      case this.totalScoreExam === 6 && scoreFinal < 7:
+        return 'Você foi bem na prova, mas não alcançou a nota mínima para ser aprovado na matéria.';
+      case this.totalScoreExercises === 4 && scoreFinal < 7:
+        return 'Você foi bem nos exercícios, mas não alcançou a nota mínima para ser aprovado na matéria.';
       default:
-        return "Parabéns pelo seu desempenho!";
+        return 'Infelizmente, você foi reprovado na matéria.';
     }
   }
 
