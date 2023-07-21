@@ -1,7 +1,45 @@
 * Pegar icone de trofeu e colocar ao chegar alguma conquista - SVG
-* Validar campos em geral, testar todos, tipos de dados diferentes - Os required NAO estao funcionando
-* verificar se os todos os selector dos components estao com 'rpg' ou 'app'
-* fazer um interceptador generico para logar rota e demais coisas no banco do Firebase - ver o que preciso LOGAR exemplo quantos users tem no APP
-* Fazer validacao de retomada caso o usuario saida da pagina e volte, retomar progresso atual.
-* cuidado ao usar o profile como base pois os dois botoes tem tamanhos fixos
-* mudar o horario da API - Parte de CREATED - horario ta errado do Brasil
+* vai usar internacionalizacao ?
+* remover console.log de toda o app
+* CRIAR mais exercicios de outros temas
+
+Temas principais:
+
+1 - LOGS
+2 - Deploy front
+
+* vamos supor que ele terminou a materia e ja tem performance de prova e atividades - se ele escolher a mesma materia concluida avisar que vai substituir a nota atual ele ira recomçear de novo. - UMA OPCAO SERÁ SALVAR A CONLUSAO DA MATERIA NO LOCALSTORAGE
+
+--------------------------------------------
+
+CENARIOS DE TESTES
+
+MENU
+1.0 - Realizar estudo
+1.1 - realizar provas antes do estudo
+
+2.0 - Fazer exercicios
+2.1 - voltar para home tentar iniciar outra materia
+
+3.0 testar varias funcoes com diversas materias - exemplo aconteceu tudo bonito com 1 e com duas ?
+
+4.0 - testar com dois usuarios diferentes em browsers diferentes
+
+5.0 - Validar campos em geral, testar todos, tipos de dados diferentes - Os required NAO estao funcionando
+
+* recomeçar do zero conferir se tudo foi zerado corretamente - MENOS dados de USER
+
+--------------------------------------------
+
+Criação MINIMA de questões
+
+Exercicios
+
+usar os endpoints para saber o que precisa criar de atividades no postman
+
+Exercicios
+{{baseURLLocal}}/exercises/subjects/count
+
+Provas
+
+{{baseURLLocal}}/exams/subjects/exams-count

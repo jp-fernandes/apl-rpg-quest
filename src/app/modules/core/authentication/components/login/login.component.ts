@@ -5,8 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { customSettings } from 'src/assets/config/customSettings';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
+import Images from 'src/app/modules/shared/enums/images.enum';
+import { formatDate } from 'src/assets/config/utils';
 
 interface ProfileExistenceResponse {
+  createdDate: any;
   message: string;
   code: number;
 }
@@ -24,7 +27,7 @@ export class LoginComponent {
     private http: HttpClient
   ) { }
 
-  imageError: string = "/assets/images/modal/modal-error.svg"
+  imageError: string = Images.ERROR;;
   titleError: string = ""
   loading: boolean = false;
 
@@ -36,7 +39,6 @@ export class LoginComponent {
 
     this.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
-        console.log('Usuário logado');
         this.checkProfileExistence(email);
       })
       .catch((error) => {
@@ -62,6 +64,8 @@ export class LoginComponent {
           if (response && response.code == 404) {
             this.router.navigate(['/create-profile'], { state: { email: email } });
           } else {
+            this.clearFullLocalStorage();
+            response.createdDate = formatDate(response.createdDate);
             localStorage.setItem('user', JSON.stringify(response));
             this.router.navigate(['/home']);
           }
@@ -77,6 +81,10 @@ export class LoginComponent {
           );
         }
       );
+  }
+
+  clearFullLocalStorage() {
+    localStorage.clear();
   }
 
   goToRegister() {

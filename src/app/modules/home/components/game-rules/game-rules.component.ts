@@ -19,6 +19,4 @@ export class GameRulesComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  //To-do
-  // 1 - Verificar como vai ficar a centralizacao da tela de regras
 }

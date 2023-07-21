@@ -1,0 +1,95 @@
+<div class="subject-overview" *ngIf="currentPage === 1">
+  <h2 class="title">Introdução</h2>
+  <h2 class="subject">{{ title }}</h2>
+
+  <div class="content">
+    <p class="text-overview">
+      {{ overview }}
+    </p>
+
+    <div class="buttons-section">
+      <button class="actions-button-pages" (click)="nextPage()">Avançar</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="subject-overview-subTopics" *ngIf="currentPage === 2">
+  <h2 class="title">Assuntos</h2>
+
+  <div class="content">
+    <ul>
+      <li class="sub-topics" *ngFor="let topic of subTopics">{{ topic }}</li>
+    </ul>
+
+    <div class="buttons-section">
+      <button class="actions-button-pages" (click)="previousPage()">Voltar</button>
+      <button class="actions-button-pages" (click)="nextPage()">Avançar</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="subject-overview" *ngIf="currentPage === 3">
+  <h2 class="title">{{ details[0].name }}</h2>
+  <div class="content">
+    <p class="text-overview">
+      {{ details[0].description }}
+    </p>
+    <p class="text-overview-example">
+      {{ details[0].example }}
+    </p>
+    <div class="buttons-section">
+      <button class="actions-button-pages" (click)="previousPage()">Voltar</button>
+      <button class="actions-button-pages" (click)="nextPage()">Avançar</button>
+    </div>
+  </div>
+</div>
+
+<div class="subject-overview" *ngIf="currentPage === 4">
+  <h2 class="title">{{ details[1].name }}</h2>
+  <div class="content">
+    <p class="text-overview">
+      {{ details[1].description }}
+    </p>
+    <p class="text-overview-example">
+      {{ details[1].example }}
+    </p>
+    <div class="buttons-section">
+      <button class="actions-button-pages" (click)="previousPage()">Voltar</button>
+      <button class="actions-button-pages" (click)="nextPage()">Avançar</button>
+    </div>
+  </div>
+</div>
+
+<div class="subject-overview" *ngIf="currentPage === 5">
+  <h2 class="title">{{ details[2].name }}</h2>
+  <div class="content">
+    <p class="text-overview">
+      {{ details[2].description }}
+    </p>
+    <p class="text-overview-example">
+      {{ details[2].example }}
+    </p>
+    <div class="buttons-section">
+      <button class="actions-button-pages" (click)="previousPage()">Voltar</button>
+      <button class="actions-button-pages" (click)="nextPage()">Avançar</button>
+    </div>
+  </div>
+</div>
+
+<div class="subject-overview" *ngIf="currentPage === 6">
+  <h2 class="title">{{ details[3].name }}</h2>
+  <div class="content">
+    <p class="text-overview">
+      {{ details[3].description }}
+    </p>
+    <p class="text-overview-example">
+      {{ details[3].example }}
+    </p>
+    <div class="buttons-section">
+      <button class="actions-button-pages" (click)="previousPage()">Voltar</button>
+      <button class="actions-button-pages" (click)="nextPage()">Avançar</button>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './modules/shared/shared.module';
 import { HomeModule } from './modules/home/home.module';
 import { AuthModule } from './modules/core/authentication/auth.module';
+import { ExercisesModule } from './modules/exercises/exercises.module';
+import { ExamsModule } from './modules/exams/exams.module';
+import { GlobalErrorHandler } from './services/interceptors/globalErrorHandler';
 
 registerLocaleData(localePt);
 
@@ -33,10 +36,16 @@ registerLocaleData(localePt);
     BrowserAnimationsModule,
     SharedModule,
     HomeModule,
+    ExercisesModule,
+    ExamsModule,
     AuthModule
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'pt' }
+    { provide: LOCALE_ID, useValue: 'pt' },
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
   ],
   bootstrap: [AppComponent]
 })

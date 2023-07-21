@@ -1,0 +1,24 @@
+<div class="performance-container">
+  <h2 class="performance-title">
+    <img class="logo-image" src="/assets/images/performance/performance.png" alt="Logo"> Desempenho Atual
+  </h2>
+
+  <div class="subjects-section">
+    <div class="subject" *ngFor="let item of performanceData.performance">
+      <button class="subject-button" (click)="confirmSubjectSelection(item)">
+        <i class="fas" [ngClass]="getItemIconClass(item.subject)"></i> {{ translatedSubjectName(item.subject) }}
+        <div class="progress">{{ item.progress }}%</div>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loader-complete"></div>
+
+  <p *ngIf="performanceData.performance.length > 0" class="select-subject-message"><i class="fas fa-info-circle"></i>Selecione a matéria para ver os detalhes.</p>
+
+  <div class="no-data-message" *ngIf="performanceData.performance.length === 0">
+    Você não registrou nenhuma atividade ou prova até o momento.
+  </div>
+
+  <div class="home-access" (click)="goToHome()">Para voltar à home, <span class="here">clique aqui</span></div>
+</div>

@@ -1,0 +1,138 @@
+.performance-container {
+  background-image: url("/assets/images/common/background-base.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 32px 0 32px;
+}
+
+.performance-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-image {
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+}
+
+.performance-sub-title {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.subjects-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.subject {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.subject-button {
+  position: relative;
+  padding: 1rem 2rem;
+  background-color: indigo;
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: 300px;
+  height: 60px;
+}
+
+.subject-button i {
+  margin-right: 10px;
+}
+
+.subject-button:hover {
+  background-color: #45a049;
+}
+
+.progress {
+  font-size: 1.2rem;
+  color: white;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+.no-data-message {
+  font-weight: bold;
+  font-size: 27px;
+  display: flex;
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 15px;
+}
+
+.fa-info-circle {
+  margin-right: 5px;
+}
+
+.select-subject-message {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.home-access {
+  margin-top: 30px;
+}
+
+.here {
+  color: darkolivegreen;
+}
+
+@media (max-width: 768px) {
+  .performance-title {
+    font-size: 30px;
+    padding: 2px;
+  }
+
+  .logo-image {
+    width: 120px;
+  }
+
+  .performance-sub-title {
+    font-size: 1.2rem;
+    padding: 2px;
+    margin-bottom: 15px;
+  }
+
+  .subjects-section {
+    width: 100%;
+  }
+
+  .subject-button {
+    margin-bottom: 12px;
+    width: 100%;
+  }
+
+  .progress {
+    font-size: 1.1rem;
+  }
+
+  .home-access {
+    margin-top: 20px;
+  }
+
+  .here {
+    color: darkolivegreen;
+  }
+}

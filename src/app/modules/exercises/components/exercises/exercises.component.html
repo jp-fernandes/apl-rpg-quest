@@ -1,0 +1,31 @@
+<div class="question-container">
+  <h2 class="question-title">Exercícios </h2>
+  <div *ngFor="let question of currentQuestions; let i = index">
+    <div class="question">
+      <p class="question-text">{{ question.text }}</p>
+      <div class="options">
+        <label *ngFor="let option of question.options" class="option-label">
+          <input
+            type="radio"
+            [name]="question.text"
+            [value]="option"
+            [(ngModel)]="question.selectedAnswer"
+            [disabled]="answersSubmitted"
+          />
+          <span class="option-text">{{ option }}</span>
+        </label>
+      </div>
+      <div *ngIf="answersSubmitted" class="question-feedback" [ngClass]="isCorrect(question) ? 'question-feedback-correct' : 'question-feedback-incorrect'">
+        {{ getQuestionFeedback(question) }}
+      </div>
+    </div>
+  </div>
+  <div *ngIf="loading" class="loader-complete"></div>
+
+  <div *ngIf="warning" class="answer-warning">
+    <p>Preencha todas as respostas antes de enviar.</p>
+  </div>
+
+  <button *ngIf="!answersSubmitted && !loading" class="action-button" (click)="submitAnswers()">Enviar</button>
+  <button *ngIf="answersSubmitted && !isLastPage() && !loading" class="action-button" (click)="nextPage()">Avançar</button>
+</div>

@@ -5,9 +5,11 @@ import { CreateProfileComponent } from './components/create-profile/create-profi
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GameRulesComponent } from './components/game-rules/game-rules.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { CurrentPerformanceComponent } from './components/current-performance/current-performance.component';
-import { ExamsComponent } from './components/exams/exams.component';
 import { StudyComponent } from './components/study/study.component';
+import { SharedModule } from '../shared/shared.module';
+import { SubjectOverviewComponent } from './components/subject-overview/subject-overview.component';
+import { FeedbackComponent } from './components/feedback/feedback.component';
+import { CurrentPerformanceModule } from '../current-performance/current-performance.module';
 
 @NgModule({
   declarations: [
@@ -15,14 +17,16 @@ import { StudyComponent } from './components/study/study.component';
     CreateProfileComponent,
     GameRulesComponent,
     ProfileComponent,
-    CurrentPerformanceComponent,
-    ExamsComponent,
-    StudyComponent
+    StudyComponent,
+    SubjectOverviewComponent,
+    FeedbackComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule,
+    CurrentPerformanceModule
   ]
 })
 export class HomeModule { }

@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ModalInfoComponent } from 'src/app/modules/shared/components/modal-info/modal-info.component';
+import Images from 'src/app/modules/shared/enums/images.enum';
 
 @Component({
   selector: 'rpg-register',
@@ -16,8 +17,8 @@ export class RegisterComponent {
     private matBottomSheet: MatBottomSheet
   ) { }
 
-  imageError: string = "/assets/images/modal/modal-error.svg"
-  imageSuccess: string = "/assets/images/modal/modal-success.svg"
+  imageError: string = Images.ERROR;
+  imageSuccess: string = Images.SUCCESS;
   flagLogin: boolean = false;
   flagForget: boolean = false;
 

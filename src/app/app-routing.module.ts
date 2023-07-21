@@ -8,9 +8,12 @@ import { HomeComponent } from './modules/home/components/home/home.component';
 import { CreateProfileComponent } from './modules/home/components/create-profile/create-profile.component';
 import { GameRulesComponent } from './modules/home/components/game-rules/game-rules.component';
 import { ProfileComponent } from './modules/home/components/profile/profile.component';
-import { CurrentPerformanceComponent } from './modules/home/components/current-performance/current-performance.component';
-import { ExamsComponent } from './modules/home/components/exams/exams.component';
+import { CurrentPerformanceComponent } from './modules/current-performance/components/current-performance/current-performance.component';
 import { StudyComponent } from './modules/home/components/study/study.component';
+import { SubjectOverviewComponent } from './modules/home/components/subject-overview/subject-overview.component';
+import { FeedbackComponent } from './modules/home/components/feedback/feedback.component';
+import { ExercisesComponent } from './modules/exercises/components/exercises/exercises.component';
+import { ExamComponent } from './modules/exams/components/exam/exam.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -20,9 +23,12 @@ const routes: Routes = [
   { path: 'create-profile', component: CreateProfileComponent },
   { path: 'home', component: HomeComponent },
   { path: 'study', component: StudyComponent },
-  { path: 'exams', component: ExamsComponent },
+  { path: 'exercises', component: ExercisesComponent },
+  { path: 'subject-overview', component: SubjectOverviewComponent },
+  { path: 'exam', component: ExamComponent },
   { path: 'current-performance', component: CurrentPerformanceComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'feedback', component: FeedbackComponent },
   { path: 'game-rules', component: GameRulesComponent }
 ]
 
