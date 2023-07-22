@@ -157,6 +157,7 @@ export class ExamComponent implements OnInit {
         (response) => {
           this.loading = false;
           this.questions = response;
+          this.notificationExam();
         },
         (error) => {
           this.loading = false;
@@ -170,6 +171,19 @@ export class ExamComponent implements OnInit {
           );
         }
       );
+  }
+
+  notificationExam(){
+
+    const titleSucess = `<strong>Prova Final</strong>`;
+    const messageSucess = "A prova vai começar! Tente alcançar a nota máxima de <strong>6 pontos.</strong>";
+
+    this.openModalInfo(
+      "",
+      "Vamos!",
+      titleSucess,
+      messageSucess
+    );
   }
 
   openModalInfo(image: string, buttonText: string, title: string, text: string) {

@@ -6,7 +6,6 @@
 Temas principais:
 
 1 - LOGS
-2 - Deploy front
 
 * vamos supor que ele terminou a materia e ja tem performance de prova e atividades - se ele escolher a mesma materia concluida avisar que vai substituir a nota atual ele ira recomçear de novo. - UMA OPCAO SERÁ SALVAR A CONLUSAO DA MATERIA NO LOCALSTORAGE
 
@@ -27,6 +26,10 @@ MENU
 
 5.0 - Validar campos em geral, testar todos, tipos de dados diferentes - Os required NAO estao funcionando
 
+6.0 - Testar tamanho dos textos para todas as materias
+
+7.0 - Nao tava chamando a MODAL para avisar o inicio da prova. Ela tava entrando direto.
+
 * recomeçar do zero conferir se tudo foi zerado corretamente - MENOS dados de USER
 
 --------------------------------------------
@@ -38,8 +41,8 @@ Exercicios
 usar os endpoints para saber o que precisa criar de atividades no postman
 
 Exercicios
-{{baseURLLocal}}/exercises/subjects/count
+{{baseURL}}/exercises/subjects/count
 
 Provas
 
-{{baseURLLocal}}/exams/subjects/exams-count
+{{baseURL}}/exams/subjects/exams-count
