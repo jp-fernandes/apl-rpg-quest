@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
   flagReset: boolean = false;
   loading: boolean = false;
   email!: string;
+  countError: number = 0;
   imageError: string = Images.ERROR;
   imageSuccess: string = Images.SUCCESS;
 
@@ -176,13 +177,25 @@ export class HomeComponent implements OnInit {
   messageErrorStudyPaths(option: any) {
     let optionTranslated = getTranslatedSubjectName(option);
 
-    const messageError = `Você precisa concluir a prova da matéria em andamento: <strong>${optionTranslated}</strong> antes de iniciar uma nova.`
-    this.openModalInfo(
-      "",
-      "OK",
-      "<strong>Ops!</strong>",
-      messageError
-    );
+    if (this.countError < 1) {
+      this.countError++;
+      const messageError = `Você precisa concluir a prova da matéria em andamento: <strong>${optionTranslated}</strong> antes de iniciar uma nova.`
+      this.openModalInfo(
+        "",
+        "OK",
+        "<strong>Ops!</strong>",
+        messageError
+      );
+    } else {
+      const messageError = `Você precisa concluir a prova da matéria em andamento: <strong>${optionTranslated}</strong> antes de iniciar uma nova. Caso tenha dificuldades para conseguir acessar alguma matéria, clique em <strong>Recomeçar do zero.</strong>`
+      this.openModalInfo(
+        "",
+        "OK",
+        "<strong>Ops!</strong>",
+        messageError
+      );
+    }
+
   }
 
   openModalInfo(image: string, buttonText: string, title: string, text: string) {
@@ -236,6 +249,7 @@ export class HomeComponent implements OnInit {
   }
 
   callDeleteActivities() {
+    this.countError = 0;
     this.loading = true;
     const apiUrl = `${customSettings.apiUrl}/subjects/activities/${encodeURIComponent(this.user.email)}`;
 
