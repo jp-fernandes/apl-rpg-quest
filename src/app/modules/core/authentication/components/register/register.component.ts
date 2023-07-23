@@ -68,7 +68,7 @@ export class RegisterComponent {
       })
       .catch((error) => {
         const messageError = this.handleErrorRegister(error.message);
-        const buttonText = this.flagForget ? "Redefinir senha" : "Voltar";
+        const buttonText = this.flagForget ? "Alterar senha" : "Voltar";
         const buttonText2 = this.flagForget ? "Voltar" : '';
         this.openModalInfo(
           this.imageError,
@@ -109,7 +109,7 @@ export class RegisterComponent {
     this.flagForget = false;
     switch (message) {
       case 'Firebase: The email address is already in use by another account. (auth/email-already-in-use).':
-        message = "O endereço de e-mail já está sendo usado por outra conta. Se você esqueceu a sua senha, clique em '<strong>Redefinir senha</strong>' para redefini-la.";
+        message = "O endereço de e-mail já está sendo usado por outra conta. Se você esqueceu a sua senha, clique em '<strong>Alterar senha</strong>' para redefini-la.";
         this.flagForget = true;
         break;
       case 'Firebase: Password should be at least 6 characters (auth/weak-password).':

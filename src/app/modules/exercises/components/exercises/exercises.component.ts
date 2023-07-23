@@ -167,6 +167,10 @@ export class ExercisesComponent implements OnInit {
     localStorage.setItem('noData', 'false');
   }
 
+  setItensLocalStorage() {
+    localStorage.setItem('completedForExam', "true");
+  }
+
   callSavePerformance(payload: any): void {
     const apiUrl = `${customSettings.apiUrl}/performance`;
     this.loading = true;
@@ -176,6 +180,7 @@ export class ExercisesComponent implements OnInit {
       (response) => {
         this.loading = false;
         this.resetItensLocalStorage();
+        this.setItensLocalStorage();
         const titleSucess = `<strong>Sua nota foi: ${this.totalScore}</strong>`;
         const messageSucess = this.getScoreMessage(this.totalScore);
 
@@ -215,6 +220,7 @@ export class ExercisesComponent implements OnInit {
       (response) => {
         this.loading = false;
         this.resetItensLocalStorage();
+        this.setItensLocalStorage();
       },
       (error) => {
         this.loading = false;

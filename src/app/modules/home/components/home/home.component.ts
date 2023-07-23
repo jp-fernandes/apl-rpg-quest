@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
   countError: number = 0;
   imageError: string = Images.ERROR;
   imageSuccess: string = Images.SUCCESS;
+  imageWarning: string = Images.WARNING;
 
   constructor(
     private matBottomSheet: MatBottomSheet,
@@ -72,7 +73,7 @@ export class HomeComponent implements OnInit {
 
     this.flagReset = true;
     this.openModalInfoChoose(
-      Images.WARNING,
+      this.imageWarning,
       "<strong>Tem certeza que deseja reiniciar o jogo?</strong>",
       "Isso significa que todo o seu progresso será apagado.",
       "Sim",
@@ -167,9 +168,9 @@ export class HomeComponent implements OnInit {
   messageErrorCheck() {
     const messageError = `Você precisa completar pelo menos 1 atividade da matéria em andamento antes de fazer a prova, caso não tenha nenhuma matéria em andamento acesse: <strong>Trilhas para Estudo</strong>.`
     this.openModalInfo(
-      "",
+      this.imageWarning,
       "OK",
-      "<strong>Erro</strong>",
+      "<strong>Atenção</strong>",
       messageError
     );
   }
@@ -189,9 +190,9 @@ export class HomeComponent implements OnInit {
     } else {
       const messageError = `Você precisa concluir a prova da matéria em andamento: <strong>${optionTranslated}</strong> antes de iniciar uma nova. Caso tenha dificuldades para conseguir acessar alguma matéria, clique em <strong>Recomeçar do zero.</strong>`
       this.openModalInfo(
-        "",
+        this.imageWarning,
         "OK",
-        "<strong>Ops!</strong>",
+        "<strong>Atenção!</strong>",
         messageError
       );
     }
@@ -318,7 +319,7 @@ export class HomeComponent implements OnInit {
     const messageInfo = "Parece que você ainda não iniciou o jogo, não há nada para reiniciar.";
 
     this.openModalInfo(
-      this.imageSuccess,
+      this.imageWarning,
       "OK",
       titleInfo,
       messageInfo

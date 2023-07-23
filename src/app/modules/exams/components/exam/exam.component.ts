@@ -301,11 +301,11 @@ export class ExamComponent implements OnInit {
 
   getMessageApprovedOrNotApproved(scoreFinal: any): string {
     switch (true) {
-      case scoreFinal >= 7:
+      case scoreFinal >= 6:
         return `Parabéns, <strong>${this.user.name}</strong>! Você foi aprovado na matéria.`;
-      case this.totalScoreExam === 6 && scoreFinal < 7:
-        return 'Você foi bem na prova, mas não alcançou a nota mínima para ser aprovado na matéria.';
-      case this.totalScoreExercises === 4 && scoreFinal < 7:
+      case this.totalScoreExam === 6 && this.totalScoreExercises == 0:
+        return 'Parabéns pela prova impecável! Isso garantiu que você passasse na matéria com mérito.';
+      case this.totalScoreExercises === 4 && scoreFinal < 6:
         return 'Você foi bem nos exercícios, mas não alcançou a nota mínima para ser aprovado na matéria.';
       default:
         return 'Infelizmente, você foi reprovado na matéria.';
