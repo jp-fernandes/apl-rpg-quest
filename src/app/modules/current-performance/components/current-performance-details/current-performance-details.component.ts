@@ -39,7 +39,7 @@ export class CurrentPerformanceDetailsComponent implements OnInit {
 
   secondChance() {
 
-    if (this.objSelectedPerformance?.examDone && this.objSelectedPerformance?.scoreTotal < 7) {
+    if (this.objSelectedPerformance?.examDone && this.objSelectedPerformance?.scoreTotal < 6) {
       this.flagExam = true;
 
       this.openModalInfoChoose(

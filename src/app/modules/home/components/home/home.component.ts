@@ -32,8 +32,10 @@ export class HomeComponent implements OnInit {
   flagReset: boolean = false;
   loading: boolean = false;
   email!: string;
+  countError: number = 0;
   imageError: string = Images.ERROR;
   imageSuccess: string = Images.SUCCESS;
+  imageWarning: string = Images.WARNING;
 
   constructor(
     private matBottomSheet: MatBottomSheet,
@@ -71,7 +73,7 @@ export class HomeComponent implements OnInit {
 
     this.flagReset = true;
     this.openModalInfoChoose(
-      Images.WARNING,
+      this.imageWarning,
       "<strong>Tem certeza que deseja reiniciar o jogo?</strong>",
       "Isso significa que todo o seu progresso será apagado.",
       "Sim",
@@ -166,9 +168,9 @@ export class HomeComponent implements OnInit {
   messageErrorCheck() {
     const messageError = `Você precisa completar pelo menos 1 atividade da matéria em andamento antes de fazer a prova, caso não tenha nenhuma matéria em andamento acesse: <strong>Trilhas para Estudo</strong>.`
     this.openModalInfo(
-      "",
+      this.imageWarning,
       "OK",
-      "<strong>Erro</strong>",
+      "<strong>Atenção</strong>",
       messageError
     );
   }
@@ -176,13 +178,25 @@ export class HomeComponent implements OnInit {
   messageErrorStudyPaths(option: any) {
     let optionTranslated = getTranslatedSubjectName(option);
 
-    const messageError = `Você precisa concluir a prova da matéria em andamento: <strong>${optionTranslated}</strong> antes de iniciar uma nova.`
-    this.openModalInfo(
-      "",
-      "OK",
-      "<strong>Ops!</strong>",
-      messageError
-    );
+    if (this.countError < 1) {
+      this.countError++;
+      const messageError = `Você precisa concluir a prova da matéria em andamento: <strong>${optionTranslated}</strong> antes de iniciar uma nova.`
+      this.openModalInfo(
+        "",
+        "OK",
+        "<strong>Ops!</strong>",
+        messageError
+      );
+    } else {
+      const messageError = `Você precisa concluir a prova da matéria em andamento: <strong>${optionTranslated}</strong> antes de iniciar uma nova. Caso tenha dificuldades para conseguir acessar alguma matéria, clique em <strong>Recomeçar do zero.</strong>`
+      this.openModalInfo(
+        this.imageWarning,
+        "OK",
+        "<strong>Atenção!</strong>",
+        messageError
+      );
+    }
+
   }
 
   openModalInfo(image: string, buttonText: string, title: string, text: string) {
@@ -236,6 +250,7 @@ export class HomeComponent implements OnInit {
   }
 
   callDeleteActivities() {
+    this.countError = 0;
     this.loading = true;
     const apiUrl = `${customSettings.apiUrl}/subjects/activities/${encodeURIComponent(this.user.email)}`;
 
@@ -304,7 +319,7 @@ export class HomeComponent implements OnInit {
     const messageInfo = "Parece que você ainda não iniciou o jogo, não há nada para reiniciar.";
 
     this.openModalInfo(
-      this.imageSuccess,
+      this.imageWarning,
       "OK",
       titleInfo,
       messageInfo
