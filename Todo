@@ -1,13 +1,6 @@
 * Pegar icone de trofeu e colocar ao chegar alguma conquista - SVG
 * vai usar internacionalizacao ?
 * remover console.log de toda o app
-* CRIAR mais exercicios de outros temas
-
-Temas principais:
-
-1 - LOGS
-
-* vamos supor que ele terminou a materia e ja tem performance de prova e atividades - se ele escolher a mesma materia concluida avisar que vai substituir a nota atual ele ira recomçear de novo. - UMA OPCAO SERÁ SALVAR A CONLUSAO DA MATERIA NO LOCALSTORAGE
 
 --------------------------------------------
 
