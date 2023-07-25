@@ -115,7 +115,19 @@
   }
 
   .subject-overview-subTopics {
+    font-size: 14px;
+  }
+
+}
+
+@media (max-width: 320px) {
+
+  .subject-overview {
     font-size: 18px;
+  }
+
+  .subject-overview-subTopics {
+    font-size: 14px;
   }
 
 }
