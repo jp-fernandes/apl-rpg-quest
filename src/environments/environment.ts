@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'http://localhost:3000',
   firebase: {
     apiKey: "AIzaSyC771dQjNLITjGW0hAOJK3I8clihl2EZew",
     authDomain: "apl-rpg-quest-firebase-4e5c1.firebaseapp.com",
