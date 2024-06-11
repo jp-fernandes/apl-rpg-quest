@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  apiUrl: 'https://apl-rpg-quest-api.vercel.app', // URL base da API para o ambiente exposto,
   firebase: {
     apiKey: "AIzaSyC771dQjNLITjGW0hAOJK3I8clihl2EZew",
     authDomain: "apl-rpg-quest-firebase-4e5c1.firebaseapp.com",

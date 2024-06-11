@@ -8,6 +8,8 @@ import { IUserData } from 'src/app/modules/shared/models/userData';
 import { customSettings } from 'src/assets/config/customSettings';
 import { getItemFromLocalStorage, getTranslatedSubjectName, getUserFromLocalStorage } from 'src/assets/config/utils';
 import Images from 'src/app/modules/shared/enums/images.enum';
+import { IHome } from '../../interfaces/IHome';
+import { StateHomeService } from '../../store/state-home.service';
 
 @Component({
   selector: 'rpg-home',
@@ -38,6 +40,7 @@ export class HomeComponent implements OnInit {
   imageWarning: string = Images.WARNING;
 
   constructor(
+    private stateAppHome: StateHomeService,
     private matBottomSheet: MatBottomSheet,
     private router: Router,
     private http: HttpClient
@@ -46,6 +49,21 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.user = getUserFromLocalStorage();
     this.name = this.user && this.user.name;
+    this.getHomeRpgState();
+    this.updateRpgState();
+  }
+
+  getHomeRpgState() {
+    this.stateAppHome.getHomeRpgState$.subscribe({
+      next: value => {
+        //console.log("Logando os valores do state da home: ", value);
+      },
+    });
+  }
+
+  updateRpgState() {
+    //console.log("Atualizando state ");
+    this.stateAppHome.updateHomeRpgState<IHome>({ teste: "new test name" });
   }
 
   studyPaths(): void {

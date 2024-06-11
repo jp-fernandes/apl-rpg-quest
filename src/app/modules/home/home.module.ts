@@ -10,6 +10,8 @@ import { SharedModule } from '../shared/shared.module';
 import { SubjectOverviewComponent } from './components/subject-overview/subject-overview.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { CurrentPerformanceModule } from '../current-performance/current-performance.module';
+import { StoreHomeService } from './store/store-home.service';
+import { StateHomeService } from './store/state-home.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,13 @@ import { CurrentPerformanceModule } from '../current-performance/current-perform
     ReactiveFormsModule,
     SharedModule,
     CurrentPerformanceModule
-  ]
+  ],
+  providers: [
+    StoreHomeService,
+    {
+      provide: StateHomeService,
+      useExisting: StoreHomeService,
+    },
+  ],
 })
 export class HomeModule { }
